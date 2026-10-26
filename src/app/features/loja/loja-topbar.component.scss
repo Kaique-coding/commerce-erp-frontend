@@ -1,0 +1,130 @@
+.loja-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  background-color: var(--p-surface-0);
+  border-bottom: 1px solid var(--p-surface-200);
+}
+
+.loja-topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.loja-topbar__title {
+  color: var(--p-text-color);
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.loja-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.loja-topbar__notification-button,
+.loja-topbar__user-menu {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.loja-topbar__notification-count {
+  position: absolute;
+  top: -0.15rem;
+  right: -0.1rem;
+  z-index: 1;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  padding: 0 0.25rem;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--p-surface-0);
+  border-radius: 999px;
+  background: var(--p-primary-color);
+  color: var(--p-primary-contrast-color, #fff);
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.loja-notifications__empty {
+  min-height: 10rem;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 0.75rem;
+  color: var(--p-text-muted-color);
+  text-align: center;
+
+  i {
+    color: var(--p-primary-color);
+    font-size: 1.75rem;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.loja-notifications__list {
+  max-height: 25rem;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.loja-notifications__item {
+  display: flex;
+  gap: 0.85rem;
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid var(--p-surface-200);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.loja-notifications__icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: 0 0 2.25rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--p-primary-100, #e0e7ff);
+  color: var(--p-primary-color);
+}
+
+.loja-notifications__content {
+  min-width: 0;
+  flex: 1;
+  color: var(--p-text-color);
+
+  p {
+    margin: 0.3rem 0;
+    font-size: 0.875rem;
+    white-space: pre-line;
+  }
+
+  time {
+    color: var(--p-text-muted-color);
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .loja-topbar {
+    padding: 0 1rem;
+  }
+}

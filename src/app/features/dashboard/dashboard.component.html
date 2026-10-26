@@ -1,0 +1,106 @@
+<div class="dashboard-page">
+  <header class="dashboard-page__header">
+    <div class="dashboard-page__header-content">
+      <div>
+        <h1 class="dashboard-page__title">Dashboard</h1>
+        <p class="dashboard-page__subtitle">Visão geral do sistema Commerce ERP.</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="dashboard-section" aria-labelledby="section-metrics">
+    <h2 id="section-metrics" class="dashboard-section__title">Visão Geral</h2>
+
+    <div class="dashboard-section__content">
+      <div class="responsive-grid">
+        <p-card header="Vendas do Mês">
+          <div class="metric">
+            <span class="metric__value">{{ formatarMoeda(0) }}</span>
+          </div>
+          <p class="metric__description">Nenhuma venda contabilizada.</p>
+        </p-card>
+
+        <p-card header="Pedidos Pendentes">
+          <div class="metric">
+            <span class="metric__value">0</span>
+          </div>
+          <p class="metric__description">Nenhum pedido pendente contabilizado.</p>
+        </p-card>
+
+        <p-card header="Clientes Ativos">
+          @if (estadoClientes() === 'carregado') {
+          <div class="metric">
+            <span class="metric__value">{{ clientesAtivos() }}</span>
+            <p-tag [value]="'+' + clientesCriadosHoje()" severity="info" />
+          </div>
+          <p class="metric__description">Clientes cadastrados hoje.</p>
+          } @else if (estadoClientes() === 'carregando') {
+          <div class="metric">
+            <span class="metric__value">—</span>
+          </div>
+          <p class="metric__description">Carregando dados de clientes...</p>
+          } @else {
+          <div class="metric">
+            <span class="metric__value">—</span>
+          </div>
+          <p class="metric__description">Não foi possível carregar os clientes.</p>
+          }
+        </p-card>
+      </div>
+    </div>
+  </section>
+
+  <section class="dashboard-section" aria-labelledby="section-recent-products">
+    <h2 id="section-recent-products" class="dashboard-section__title">Produtos Recentes</h2>
+    <p class="dashboard-section__subtitle">
+      Produtos criados ou atualizados nas últimas 48 horas.
+    </p>
+
+    <div class="dashboard-section__content">
+      <p-card>
+        @if (estadoProdutos() === 'carregando') {
+        <div class="dashboard-loading" aria-label="Carregando produtos recentes">
+          <p-progressspinner strokeWidth="4" />
+        </div>
+        } @else if (estadoProdutos() === 'erro') {
+        <p class="dashboard-empty" role="alert">
+          Não foi possível carregar os produtos recentes.
+        </p>
+        } @else {
+        <p-table [value]="produtosRecentes()" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
+          styleClass="p-datatable-striped p-datatable-gridlines" responsiveLayout="scroll"
+          aria-label="Produtos criados ou atualizados nas últimas 48 horas">
+          <ng-template pTemplate="header">
+            <tr>
+
+              <th scope="col">Produto</th>
+              <th scope="col">Status</th>
+              <th scope="col">Atividade</th>
+              <th scope="col">Data</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-produto>
+            <tr>
+              <td>{{ produto.nome }}</td>
+              <td>
+                <p-tag [value]="statusLabel(produto.ativo)" [severity]="statusSeverity(produto.ativo)" />
+              </td>
+              <td>{{ atividadeLabel(produto) }}</td>
+              <td>{{ (produto.atualizadoEm ?? produto.criadoEm) | date: 'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="7" class="dashboard-empty">
+                Nenhum produto foi criado ou atualizado nas últimas 48 horas.
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        }
+      </p-card>
+    </div>
+  </section>
+</div>

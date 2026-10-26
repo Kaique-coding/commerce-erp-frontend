@@ -1,0 +1,56 @@
+// Tipografia global
+// Usa as variáveis de fonte do PrimeNG quando disponíveis, com fallback seguro.
+
+body {
+  font-family: var(--p-font-family, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  font-size: var(--p-font-size, 1rem);
+  line-height: var(--p-line-height, 1.5);
+  color: var(--p-text-color, #1e293b);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--p-text-color);
+}
+
+h1 { font-size: 1.875rem; }
+h2 { font-size: 1.5rem;   }
+h3 { font-size: 1.25rem;  }
+h4 { font-size: 1.125rem; }
+h5 { font-size: 1rem;     }
+h6 { font-size: 0.875rem; }
+
+p {
+  margin: 0 0 1rem;
+  color: var(--p-text-color);
+}
+
+a {
+  color: var(--p-primary-color);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--p-primary-color);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+small {
+  font-size: 0.8125rem;
+  color: var(--p-text-muted-color);
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.875em;
+  background-color: var(--p-surface-100);
+  padding: 0.125em 0.375em;
+  border-radius: 4px;
+  color: var(--p-text-color);
+}

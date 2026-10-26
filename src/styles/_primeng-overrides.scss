@@ -1,0 +1,25 @@
+// Customizações pontuais do PrimeNG.
+//
+// Use este arquivo apenas para ajustes que NÃO possam ser feitos via design tokens
+// (definePreset no theme.config.ts). Evite sobrescrever estilos internos sem necessidade.
+
+// Garante que o p-card ocupe 100% da largura do container por padrão
+.p-card {
+  width: 100%;
+}
+
+// Ajuste de padding do card body para mais respiro
+.p-card-body {
+  padding: 1.25rem 1.5rem;
+}
+
+// Melhora visibilidade do foco em linhas de tabela
+.p-datatable .p-datatable-tbody > tr:focus-visible {
+  outline: 2px solid var(--p-primary-color);
+  outline-offset: -2px;
+}
+
+// Skeleton com margem inferior (helper para uso em listas)
+.p-skeleton.mb-2 {
+  margin-bottom: 0.5rem;
+}

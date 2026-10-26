@@ -1,0 +1,28 @@
+.loja-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--p-surface-50);
+}
+
+.loja-layout__main {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.loja-layout__content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .loja-layout {
+    flex-direction: column;
+  }
+
+  .loja-layout__content {
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,162 @@
+<div class="pedidos-page">
+  <header class="pedidos-page__header">
+    <div>
+      <h1 class="pedidos-page__title">Pedidos</h1>
+      <p class="pedidos-page__subtitle">Acompanhe os pedidos e os dados dos clientes que os realizaram.</p>
+    </div>
+  </header>
+
+  <div class="pedidos-toolbar">
+    <span class="p-input-icon-left pedidos-toolbar__search">
+      <i class="pi pi-search" aria-hidden="true"></i>
+      <input
+        pInputText
+        type="search"
+        [ngModel]="filtroTexto()"
+        (ngModelChange)="atualizarPesquisa($event)"
+        placeholder="Buscar por pedido, cliente, e-mail ou produto..."
+        aria-label="Buscar pedidos"
+      />
+    </span>
+    <p-select
+      [options]="opcoesStatus"
+      [ngModel]="filtroStatus()"
+      (ngModelChange)="filtroStatus.set($event)"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Todos os status"
+      [showClear]="true"
+      aria-label="Filtrar por status"
+      styleClass="pedidos-toolbar__select"
+    />
+  </div>
+
+  <p-card>
+    @if (carregando()) {
+      <div class="pedidos-loading" role="status" aria-label="Carregando pedidos">
+        <p-progressspinner strokeWidth="4" />
+      </div>
+    } @else if (erroCarregamento()) {
+      <div class="pedidos-empty" role="alert">
+        <i class="pi pi-exclamation-triangle" aria-hidden="true"></i>
+        <p>{{ erroCarregamento() }}</p>
+        <p-button label="Tentar novamente" icon="pi pi-refresh" severity="secondary" [outlined]="true" (onClick)="carregarPedidos()" />
+      </div>
+    } @else {
+      <p-table
+        [value]="pedidosFiltrados()"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        styleClass="p-datatable-striped p-datatable-gridlines"
+        responsiveLayout="scroll"
+        aria-label="Lista de pedidos"
+        [rowHover]="true"
+        dataKey="id"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col">Pedido</th>
+            <th scope="col">Cliente</th>
+            <th pSortableColumn="criadoEm" scope="col">Data <p-sortIcon field="criadoEm" /></th>
+            <th scope="col">Pagamento</th>
+            <th scope="col" class="pedidos-col--numeric">Produtos</th>
+            <th pSortableColumn="valorTotal" scope="col" class="pedidos-col--numeric">Total <p-sortIcon field="valorTotal" /></th>
+            <th scope="col" class="pedidos-col--status">Status</th>
+            <th scope="col" class="pedidos-col--actions">Ações</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-pedido>
+          <tr>
+            <td><strong class="pedido-id">#{{ pedido.id.slice(0, 8).toUpperCase() }}</strong></td>
+            <td>
+              <div class="cliente-nome">{{ pedido.cliente?.nome }} {{ pedido.cliente?.sobrenome }}</div>
+              <small class="cliente-email">{{ pedido.cliente?.emailPrincipal }}</small>
+            </td>
+            <td>{{ pedido.criadoEm | date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ formaPagamentoLabel(pedido.formaPagamento) }}</td>
+            <td class="pedidos-col--numeric">{{ pedido.produtos.length }}</td>
+            <td class="pedidos-col--numeric">{{ formatarMoeda(pedido.valorTotal) }}</td>
+            <td class="pedidos-col--status">
+              <p-tag [value]="statusLabel(pedido.status)" [severity]="statusSeverity(pedido.status)" />
+            </td>
+            <td class="pedidos-col--actions">
+              <p-button icon="pi pi-eye" severity="secondary" [text]="true" [rounded]="true"
+                pTooltip="Ver detalhes" tooltipPosition="top"
+                [attr.aria-label]="'Ver pedido ' + pedido.id"
+                (onClick)="visualizarPedido(pedido)" />
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">
+              <div class="pedidos-empty">
+                <i class="pi pi-receipt" aria-hidden="true"></i>
+                <p>{{ filtroTexto() || filtroStatus() ? 'Nenhum pedido corresponde aos filtros.' : 'Ainda não existem pedidos cadastrados.' }}</p>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    }
+  </p-card>
+</div>
+
+<p-dialog
+  header="Detalhes do pedido"
+  [visible]="detalhesVisiveis()"
+  (visibleChange)="detalhesVisiveis.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="pedido-detalhes-dialog"
+  [style]="{ width: '820px', maxWidth: '96vw' }"
+>
+  @if (pedidoSelecionado(); as pedido) {
+    <div class="pedido-detalhes">
+      <section class="pedido-detalhes__topo">
+        <div>
+          <span class="pedido-detalhes__referencia">Pedido #{{ pedido.id.toUpperCase() }}</span>
+          <p>Realizado em {{ pedido.criadoEm | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
+          <p>Forma de pagamento: {{ formaPagamentoLabel(pedido.formaPagamento) }}</p>
+        </div>
+        <p-tag [value]="statusLabel(pedido.status)" [severity]="statusSeverity(pedido.status)" />
+      </section>
+
+      <section class="pedido-cliente" aria-labelledby="pedido-cliente-titulo">
+        <h2 id="pedido-cliente-titulo"><i class="pi pi-user" aria-hidden="true"></i> Dados do cliente</h2>
+        <div class="pedido-cliente__grid">
+          <div><span>Nome</span><strong>{{ pedido.cliente.nome }} {{ pedido.cliente.sobrenome }}</strong></div>
+          <div><span>E-mail</span><strong>{{ pedido.cliente.emailPrincipal }}</strong></div>
+          <div><span>Telefone</span><strong>{{ pedido.cliente.telefonePrincipal || '—' }}</strong></div>
+          <div><span>ID do cliente</span><strong>{{ pedido.cliente.id }}</strong></div>
+        </div>
+      </section>
+
+      <section class="pedido-itens" aria-labelledby="pedido-itens-titulo">
+        <h2 id="pedido-itens-titulo"><i class="pi pi-shopping-bag" aria-hidden="true"></i> Produtos do pedido</h2>
+        <div class="pedido-itens__lista">
+          @for (item of pedido.produtos; track item.id) {
+            <article class="pedido-item">
+              <div class="pedido-item__produto">
+                <strong>{{ item.nomeProduto }}</strong>
+                <small>{{ item.marca || item.modelo || '—' }}</small>
+              </div>
+              <div><span>Quantidade</span><strong>{{ item.quantidade }}{{ item.unidadeMedidaVenda ? ' ' + item.unidadeMedidaVenda : '' }}</strong></div>
+              <div><span>Preço unitário</span><strong>{{ formatarMoeda(item.valorUnitario) }}</strong></div>
+              <div><span>Subtotal</span><strong>{{ formatarMoeda(item.subtotal) }}</strong></div>
+            </article>
+          }
+        </div>
+      </section>
+
+      <footer class="pedido-detalhes__total">
+        <span>Total do pedido</span>
+        <strong>{{ formatarMoeda(pedido.valorTotal) }}</strong>
+      </footer>
+    </div>
+  }
+</p-dialog>

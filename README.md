@@ -1,59 +1,69 @@
-# CommerceErp
+# Commerce ERP — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.23.
+Interface web do Commerce ERP, uma aplicação de gestão comercial com área administrativa e loja virtual para clientes. Este projeto foi desenvolvido com Angular e utiliza PrimeNG para componentes de interface.
 
-## Development server
+## Funcionalidades
 
-To start a local development server, run:
+- Login e cadastro público de clientes.
+- Redirecionamento de clientes para a loja e de usuários internos para a área administrativa.
+- Área administrativa para consultar e gerenciar produtos e usuários.
+- Pesquisa de produtos e usuários.
+- Dashboard com indicadores e produtos criados ou atualizados recentemente.
+- Notificações separadas por perfil: clientes recebem boas-vindas; usuários internos recebem avisos de novos produtos e de cadastro de usuários internos.
+- Área da loja com topbar e sidebar próprias para clientes.
 
-```bash
-ng serve
-```
+## Requisitos
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Node.js e npm instalados.
+- API do Commerce ERP em execução em `http://localhost:8080` para usar login, cadastro e dados do sistema.
 
-## Code scaffolding
+## Como executar
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. Clone este repositório e abra a pasta do frontend no terminal.
+2. Instale as dependências:
 
-```bash
-ng generate component component-name
-```
+   ```bash
+   npm install
+   ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+3. Confirme que a API está disponível em `http://localhost:8080`. A URL é definida em `src/environments/environment.ts`.
+4. Inicie o servidor de desenvolvimento:
 
-```bash
-ng generate --help
-```
+   ```bash
+   npm start
+   ```
 
-## Building
+5. Abra [http://localhost:4200](http://localhost:4200) no navegador. O Angular atualiza a aplicação automaticamente quando os arquivos são alterados.
 
-To build the project run:
+## Comandos úteis
 
-```bash
-ng build
-```
+| Comando | Descrição |
+| --- | --- |
+| `npm start` | Inicia o servidor Angular de desenvolvimento. |
+| `npm run build` | Compila a aplicação para produção em `dist/`. |
+| `npm run watch` | Recompila a aplicação automaticamente em modo de desenvolvimento. |
+| `npm test` | Executa os testes configurados no projeto. |
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Rotas principais
 
-## Running unit tests
+| Rota | Área |
+| --- | --- |
+| `/` | Login |
+| `/usuario` | Cadastro público de cliente |
+| `/loja` | Área do cliente |
+| `/app/dashboard` | Dashboard administrativo |
+| `/app/produtos` | Gerenciamento de produtos |
+| `/app/usuarios` | Gerenciamento de usuários |
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+As rotas administrativas exigem autenticação. O acesso à loja é destinado a contas com perfil de cliente.
 
-```bash
-ng test
-```
+## Tecnologias
 
-## Running end-to-end tests
+- Angular 21 e TypeScript
+- PrimeNG e PrimeIcons
+- RxJS
+- SCSS
 
-For end-to-end (e2e) testing, run:
+## Backend
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+O frontend consome a API REST do projeto backend. Para executar o sistema completo, inicie também o backend e configure a URL da API em `src/environments/environment.ts` se ela não estiver em `http://localhost:8080`.

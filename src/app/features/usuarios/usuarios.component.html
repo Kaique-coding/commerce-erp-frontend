@@ -1,0 +1,315 @@
+<div class="usuarios-page">
+<header class="usuarios-page__header">
+    <div>
+        <h1 class="usuarios-page__title">Usuários</h1>
+        <p class="usuarios-page__subtitle">Gerencie os usuários do sistema.</p>
+    </div>
+    <p-button
+      label="Novo usuário"
+      icon="pi pi-plus"
+      (onClick)="abrirFormulario()"
+      aria-label="Cadastrar novo usuário"
+    />
+</header>
+
+<div class="usuarios-toolbar">
+    <span class="p-input-icon-left usuarios-toolbar__search">
+      <i class="pi pi-search" aria-hidden="true"></i>
+      <input
+        pInputText
+        type="search"
+        [ngModel]="filtroTexto()"
+        (ngModelChange)="atualizarPesquisa($event)"
+        placeholder="Buscar por nome, CPF ou ID..."
+        aria-label="Buscar usuário"
+      />
+    </span>
+
+    <p-select
+      [options]="opcoesStatus"
+      [ngModel]="filtroStatus()"
+      (ngModelChange)="filtroStatus.set($event)"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Todos os status"
+      [showClear]="true"
+      aria-label="Filtrar por status"
+      styleClass="produtos-toolbar__select"
+    />
+  </div>
+
+  <p-card>
+    @if (carregando()) {
+      <div class="usuarios-loading" aria-label="Carregando usuários">
+        <p-progressspinner strokeWidth="4" />
+      </div>
+    } @else if (erroCarregamento()) {
+      <div class="usuarios-empty" role="alert">
+        <i class="pi pi-exclamation-triangle" aria-hidden="true"></i>
+        <p>{{ erroCarregamento() }}</p>
+        <p-button
+          label="Tentar novamente"
+          icon="pi pi-refresh"
+          severity="secondary"
+          [outlined]="true"
+          (onClick)="carregarUsuarios()"
+        />
+      </div>
+    } @else {
+      <p-table
+        [value]="usuariosFiltrados()"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        styleClass="p-datatable-striped p-datatable-gridlines"
+        responsiveLayout="scroll"
+        aria-label="Lista de usuários"
+        [rowHover]="true"
+        dataKey="id"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="nome" scope="col">Nome <p-sortIcon field="nome" /></th>
+            <th pSortableColumn="emailPrincipal" scope="col">E-mail <p-sortIcon field="emailPrincipal" /></th>
+            <th pSortableColumn="cpf" scope="col">CPF <p-sortIcon field="cpf" /></th>
+            <th pSortableColumn="perfilUsuario" scope="col">Perfil <p-sortIcon field="perfilUsuario" /></th>
+            <th scope="col" class="col-status">Status</th>
+            <th scope="col" class="col-acoes">Ações</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-usuario>
+          <tr>
+            <td>
+              <div class="cell-nome">{{ usuario.nome }} {{ usuario.sobrenome }}</div>
+              <small class="cell-sub">{{ usuario.usuario }}</small>
+            </td>
+            <td>{{ usuario.emailPrincipal }}</td>
+            <td>{{ mascararCpf(usuario.cpf) }}</td>
+            <td>{{ perfilLabel(usuario.perfilUsuario) }}</td>
+            <td class="col-status">
+              <p-tag
+                [value]="usuario.ativo ? 'Ativo' : 'Inativo'"
+                [severity]="usuario.ativo ? 'success' : 'secondary'"
+              />
+            </td>
+            <td class="col-acoes">
+              <p-button
+                icon="pi pi-eye"
+                severity="secondary"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Visualizar"
+                tooltipPosition="top"
+                [attr.aria-label]="'Visualizar ' + usuario.nome"
+                (onClick)="visualizarUsuario(usuario)"
+              />
+              <p-button
+                icon="pi pi-pencil"
+                severity="secondary"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Editar"
+                tooltipPosition="top"
+                [attr.aria-label]="'Editar ' + usuario.nome"
+                (onClick)="abrirEdicao(usuario)"
+              />
+              <p-button
+                [icon]="usuario.ativo ? 'pi pi-ban' : 'pi pi-check-circle'"
+                [severity]="usuario.ativo ? 'warn' : 'success'"
+                [text]="true"
+                [rounded]="true"
+                [pTooltip]="usuario.ativo ? 'Inativar' : 'Ativar'"
+                tooltipPosition="top"
+                [attr.aria-label]="(usuario.ativo ? 'Inativar ' : 'Ativar ') + usuario.nome"
+                (onClick)="confirmarAlteracaoStatus(usuario)"
+              />
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Excluir"
+                tooltipPosition="top"
+                [attr.aria-label]="'Excluir ' + usuario.nome"
+                (onClick)="confirmarExclusao(usuario)"
+              />
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">
+              <div class="usuarios-empty">
+                <i class="pi pi-users" aria-hidden="true"></i>
+                <p>Nenhum usuário encontrado.</p>
+                <p-button label="Cadastrar usuário" icon="pi pi-plus" severity="secondary"
+                          [outlined]="true" (onClick)="abrirFormulario()" />
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    }
+  </p-card>
+</div>
+
+<p-dialog
+  [(visible)]="dialogVisivel"
+  [header]="modoEdicao() ? 'Editar usuário' : 'Novo usuário'"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="usuarios-dialog"
+  [style]="{ width: '760px', maxWidth: '98vw' }"
+  (onHide)="fecharFormulario()"
+>
+  <form [formGroup]="form" novalidate (ngSubmit)="salvar()" aria-label="Formulário de cadastro de usuário">
+    <div class="form-row">
+      <div class="form-field form-field--full" [class.form-field--error]="invalido('usuario')">
+        <label for="usr-usuario" class="form-label">Usuário <span class="required" aria-hidden="true">*</span></label>
+        <input pInputText id="usr-usuario" formControlName="usuario" autocomplete="username"
+               [attr.aria-invalid]="invalido('usuario') || null" aria-describedby="usr-usuario-err" />
+        @if (invalido('usuario')) {
+          <small id="usr-usuario-err" class="field-error" role="alert">{{ erroMensagem('usuario') }}</small>
+        }
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field" [class.form-field--error]="invalido('nome')">
+        <label for="usr-nome" class="form-label">Nome <span class="required" aria-hidden="true">*</span></label>
+        <input pInputText id="usr-nome" formControlName="nome" autocomplete="given-name"
+               [attr.aria-invalid]="invalido('nome') || null" aria-describedby="usr-nome-err" />
+        @if (invalido('nome')) {
+          <small id="usr-nome-err" class="field-error" role="alert">{{ erroMensagem('nome') }}</small>
+        }
+      </div>
+      <div class="form-field" [class.form-field--error]="invalido('sobrenome')">
+        <label for="usr-sobrenome" class="form-label">Sobrenome <span class="required" aria-hidden="true">*</span></label>
+        <input pInputText id="usr-sobrenome" formControlName="sobrenome" autocomplete="family-name"
+               [attr.aria-invalid]="invalido('sobrenome') || null" aria-describedby="usr-sobrenome-err" />
+        @if (invalido('sobrenome')) {
+          <small id="usr-sobrenome-err" class="field-error" role="alert">{{ erroMensagem('sobrenome') }}</small>
+        }
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field" [class.form-field--error]="invalido('dataNascimento')">
+        <label for="usr-nascimento" class="form-label">Data de nascimento <span class="required" aria-hidden="true">*</span></label>
+        <input pInputText id="usr-nascimento" formControlName="dataNascimento" mask="00/00/0000"
+               [dropSpecialCharacters]="false" inputmode="numeric" placeholder="DD/MM/AAAA" autocomplete="bday"
+               [attr.aria-invalid]="invalido('dataNascimento') || null" aria-describedby="usr-nascimento-err" />
+        @if (invalido('dataNascimento')) {
+          <small id="usr-nascimento-err" class="field-error" role="alert">{{ erroMensagem('dataNascimento') }}</small>
+        }
+      </div>
+      <div class="form-field" [class.form-field--error]="invalido('genero')">
+        <label for="usr-genero" class="form-label">Gênero <span class="required" aria-hidden="true">*</span></label>
+        <p-select inputId="usr-genero" formControlName="genero" [options]="opcoesGenero"
+                  optionLabel="label" optionValue="value" placeholder="Selecione" [showClear]="true"
+                  styleClass="w-full" [attr.aria-invalid]="invalido('genero') || null"
+                  aria-describedby="usr-genero-err" />
+        @if (invalido('genero')) {
+          <small id="usr-genero-err" class="field-error" role="alert">{{ erroMensagem('genero') }}</small>
+        }
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field" [class.form-field--error]="invalido('cpf')">
+        <label for="usr-cpf" class="form-label">CPF <span class="required" aria-hidden="true">*</span></label>
+        <input pInputText id="usr-cpf" formControlName="cpf" mask="000.000.000-00"
+               [dropSpecialCharacters]="false" inputmode="numeric" autocomplete="off"
+               [attr.aria-invalid]="invalido('cpf') || null" aria-describedby="usr-cpf-err" />
+        @if (invalido('cpf')) {
+          <small id="usr-cpf-err" class="field-error" role="alert">{{ erroMensagem('cpf') }}</small>
+        }
+      </div>
+      <div class="form-field">
+        <label for="usr-rg" class="form-label">RG</label>
+        <input pInputText id="usr-rg" formControlName="rg" autocomplete="off" maxlength="20" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field" [class.form-field--error]="invalido('emailPrincipal')">
+        <label for="usr-email-principal" class="form-label">E-mail principal <span class="required" aria-hidden="true">*</span></label>
+        <input pInputText id="usr-email-principal" type="email" formControlName="emailPrincipal" autocomplete="email"
+               [attr.aria-invalid]="invalido('emailPrincipal') || null" aria-describedby="usr-email-principal-err" />
+        @if (invalido('emailPrincipal')) {
+          <small id="usr-email-principal-err" class="field-error" role="alert">{{ erroMensagem('emailPrincipal') }}</small>
+        }
+      </div>
+      <div class="form-field" [class.form-field--error]="invalido('emailSecundario')">
+        <label for="usr-email-secundario" class="form-label">E-mail secundário</label>
+        <input pInputText id="usr-email-secundario" type="email" formControlName="emailSecundario" autocomplete="email"
+               [attr.aria-invalid]="invalido('emailSecundario') || null" aria-describedby="usr-email-secundario-err" />
+        @if (invalido('emailSecundario')) {
+          <small id="usr-email-secundario-err" class="field-error" role="alert">{{ erroMensagem('emailSecundario') }}</small>
+        }
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field" [class.form-field--error]="invalido('telefonePrincipal')">
+        <label for="usr-telefone-principal" class="form-label">Telefone principal <span class="required" aria-hidden="true">*</span></label>
+        <input pInputText id="usr-telefone-principal" formControlName="telefonePrincipal"
+               mask="(00) 00000-0000" [dropSpecialCharacters]="false" inputmode="numeric" autocomplete="tel"
+               [attr.aria-invalid]="invalido('telefonePrincipal') || null" aria-describedby="usr-telefone-principal-err" />
+        @if (invalido('telefonePrincipal')) {
+          <small id="usr-telefone-principal-err" class="field-error" role="alert">{{ erroMensagem('telefonePrincipal') }}</small>
+        }
+      </div>
+      <div class="form-field">
+        <label for="usr-telefone-secundario" class="form-label">Telefone secundário</label>
+        <input pInputText id="usr-telefone-secundario" formControlName="telefoneSecundario"
+               mask="(00) 0000-00009" [dropSpecialCharacters]="false" inputmode="numeric" autocomplete="tel" />
+      </div>
+    </div>
+
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Cancelar" severity="secondary" [outlined]="true"
+              (onClick)="fecharFormulario()" [disabled]="salvando()" />
+    <p-button [label]="modoEdicao() ? 'Salvar alterações' : 'Cadastrar usuário'"
+              icon="pi pi-check" [loading]="salvando()"
+              (onClick)="salvar()" />
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  header="Dados do usuário"
+  [visible]="detalhesVisiveis()"
+  (visibleChange)="detalhesVisiveis.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="usuarios-detalhes-dialog"
+  [style]="{ width: '680px', maxWidth: '96vw' }"
+>
+  @if (usuarioSelecionado(); as usuario) {
+    <div class="details-grid">
+      <div class="details-item">
+        <span class="details-label">Status</span>
+        <p-tag [value]="usuario.ativo ? 'Ativo' : 'Desativado'"
+               [severity]="usuario.ativo ? 'success' : 'secondary'" />
+      </div>
+      <div class="details-item"><span class="details-label">CPF</span><span>{{ mascararCpf(usuario.cpf) }}</span></div>
+      <div class="details-item"><span class="details-label">Data de nascimento</span><span>{{ usuario.dataNascimento ? formatarDataParaTela(usuario.dataNascimento) : '—' }}</span></div>
+      <div class="details-item"><span class="details-label">E-mail principal</span><span>{{ usuario.emailPrincipal || '—' }}</span></div>
+      <div class="details-item"><span class="details-label">E-mail secundário</span><span>{{ usuario.emailSecundario || '—' }}</span></div>
+      <div class="details-item"><span class="details-label">Gênero</span><span>{{ generoLabel(usuario.genero) }}</span></div>
+      <div class="details-item"><span class="details-label">Nome</span><span>{{ usuario.nome }}</span></div>
+      <div class="details-item"><span class="details-label">Sobrenome</span><span>{{ usuario.sobrenome }}</span></div>
+      <div class="details-item"><span class="details-label">Nome de usuário</span><span>{{ usuario.usuario }}</span></div>
+      <div class="details-item"><span class="details-label">Telefone principal</span><span>{{ usuario.telefonePrincipal || '—' }}</span></div>
+      <div class="details-item"><span class="details-label">Telefone secundário</span><span>{{ usuario.telefoneSecundario || '—' }}</span></div>
+    </div>
+  }
+</p-dialog>
+
+<p-confirmDialog />

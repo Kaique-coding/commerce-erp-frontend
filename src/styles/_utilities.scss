@@ -1,0 +1,79 @@
+// Classes utilitárias para espaçamento, alinhamento e layout.
+// Escopo intencional: apenas utilidades que não estejam cobertas pelo PrimeNG.
+
+// ── Espaçamento ──────────────────────────────────────────────────────
+
+.u-mt-0  { margin-top:    0;       }
+.u-mt-xs { margin-top:    0.25rem; }
+.u-mt-sm { margin-top:    0.5rem;  }
+.u-mt-md { margin-top:    1rem;    }
+.u-mt-lg { margin-top:    1.5rem;  }
+.u-mt-xl { margin-top:    2rem;    }
+.u-mt-2xl{ margin-top:    3rem;    }
+
+.u-mb-0  { margin-bottom: 0;       }
+.u-mb-xs { margin-bottom: 0.25rem; }
+.u-mb-sm { margin-bottom: 0.5rem;  }
+.u-mb-md { margin-bottom: 1rem;    }
+.u-mb-lg { margin-bottom: 1.5rem;  }
+.u-mb-xl { margin-bottom: 2rem;    }
+
+.u-mx-auto { margin-inline: auto; }
+.u-mx-md   { margin-inline: 1rem; }
+
+.u-p-sm { padding: 0.5rem; }
+.u-p-md { padding: 1rem;   }
+.u-p-lg { padding: 1.5rem; }
+
+.u-px-md { padding-inline: 1rem;   }
+.u-py-md { padding-block:  1rem;   }
+.u-px-lg { padding-inline: 1.5rem; }
+.u-py-lg { padding-block:  1.5rem; }
+
+// ── Flexbox ──────────────────────────────────────────────────────────
+.u-flex           { display: flex; }
+.u-flex-col       { display: flex; flex-direction: column; }
+.u-flex-wrap      { flex-wrap: wrap; }
+.u-items-center   { align-items: center; }
+.u-items-start    { align-items: flex-start; }
+.u-items-end      { align-items: flex-end; }
+.u-justify-center { justify-content: center; }
+.u-justify-between{ justify-content: space-between; }
+.u-justify-end    { justify-content: flex-end; }
+.u-gap-xs         { gap: 0.25rem; }
+.u-gap-sm         { gap: 0.5rem;  }
+.u-gap-md         { gap: 1rem;    }
+.u-gap-lg         { gap: 1.5rem;  }
+
+// ── Texto ─────────────────────────────────────────────────────────────
+.u-text-center   { text-align: center; }
+.u-text-right    { text-align: right;  }
+.u-text-muted    { color: var(--p-text-muted-color); }
+.u-text-primary  { color: var(--p-primary-color); }
+.u-text-sm       { font-size: 0.875rem; }
+.u-text-xs       { font-size: 0.75rem;  }
+.u-font-medium   { font-weight: 500; }
+.u-font-semibold { font-weight: 600; }
+.u-font-bold     { font-weight: 700; }
+
+// ── Visibilidade ──────────────────────────────────────────────────────
+.u-hidden { display: none; }
+
+@media (max-width: 768px) {
+  .u-hidden-mobile { display: none; }
+}
+
+@media (min-width: 769px) {
+  .u-hidden-desktop { display: none; }
+}
+
+// ── Largura ───────────────────────────────────────────────────────────
+.u-w-full { width: 100%; }
+.u-w-auto { width: auto; }
+
+// ── Truncamento de texto ──────────────────────────────────────────────
+.u-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

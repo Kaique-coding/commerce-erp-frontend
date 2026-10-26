@@ -1,0 +1,108 @@
+.dashboard-page {
+  max-width: 1200px;
+}
+
+// ── Cabeçalho da página ──────────────────────────────────────────────
+.dashboard-page__header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-page__header-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dashboard-page__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--p-text-color);
+  margin: 0 0 0.5rem;
+}
+
+.dashboard-page__subtitle {
+  color: var(--p-text-muted-color);
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+// ── Seções ───────────────────────────────────────────────────────────
+.dashboard-section {
+  margin-bottom: 2.5rem;
+}
+
+.dashboard-section__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--p-text-color);
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--p-primary-color);
+  display: inline-block;
+}
+
+// ── Grupos de botões ─────────────────────────────────────────────────
+// ── Grid responsivo de cartões ────────────────────────────────────────
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.metric__value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--p-text-color);
+}
+
+.metric__description {
+  font-size: 0.8125rem;
+  color: var(--p-text-muted-color);
+  margin: 0;
+}
+
+.dashboard-section__subtitle {
+  margin: -0.5rem 0 1rem;
+  color: var(--p-text-muted-color);
+  font-size: 0.875rem;
+}
+
+.dashboard-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 10rem;
+}
+
+.dashboard-empty {
+  padding: 1.5rem;
+  color: var(--p-text-muted-color);
+  text-align: center;
+}
+
+.cell-sub {
+  display: block;
+  color: var(--p-text-muted-color);
+  font-size: 0.8125rem;
+}
+
+// ── Responsividade ─────────────────────────────────────────────────────
+@media (max-width: 600px) {
+  .dashboard-page__title {
+    font-size: 1.375rem;
+  }
+
+  .dashboard-page__header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

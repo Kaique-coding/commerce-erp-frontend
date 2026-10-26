@@ -1,0 +1,330 @@
+<p-toast position="top-right" />
+
+<div class="cadastro-page" aria-label="Página de cadastro">
+
+  <!-- ── Painel de marca (esquerdo) ──────────────────────────────────── -->
+  <aside class="cadastro-panel cadastro-panel--brand" aria-hidden="true">
+    <div class="cadastro-panel__brand-content">
+      <div class="brand-logo">
+        <span class="brand-logo__icon">
+          <i class="pi pi-box" aria-hidden="true"></i>
+        </span>
+      </div>
+      <h1 class="brand-title">Commerce ERP</h1>
+    </div>
+    <div class="brand-blob brand-blob--1" aria-hidden="true"></div>
+    <div class="brand-blob brand-blob--2" aria-hidden="true"></div>
+    <div class="brand-blob brand-blob--3" aria-hidden="true"></div>
+  </aside>
+
+  <!-- ── Painel do formulário (direito) ──────────────────────────────── -->
+  <main class="cadastro-panel cadastro-panel--form" role="main">
+    <div class="cadastro-form-wrapper">
+
+      <header class="cadastro-form-header">
+        <div class="cadastro-form-header__mobile-logo" aria-hidden="true">
+          <span class="mobile-logo__icon"><i class="pi pi-box"></i></span>
+          <span class="mobile-logo__name">Commerce ERP</span>
+        </div>
+        <h2 class="cadastro-form-header__title">Crie sua conta</h2>
+        <p class="cadastro-form-header__subtitle">
+          Preencha os dados abaixo para criar seu acesso ao sistema.
+        </p>
+      </header>
+
+      @if (cadastroError()) {
+        <div class="auth-error" role="alert" aria-live="assertive" aria-atomic="true">
+          <p-message severity="error" [text]="cadastroError()!" styleClass="auth-error__message" />
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate autocomplete="on"
+            aria-label="Formulário de cadastro">
+
+        <!-- Seção: Dados de acesso -->
+        <p class="form-section-title">Dados de acesso</p>
+
+        <!-- Nome de usuário -->
+        <div class="form-field" [ngClass]="{ 'form-field--error': usuarioInvalido() }">
+          <p-floatlabel variant="on">
+            <input pInputText id="cad-usuario" formControlName="usuario" autocomplete="username"
+                   [attr.aria-invalid]="usuarioInvalido() || null" aria-describedby="cad-usuario-err"
+                   [class.ng-invalid]="usuarioInvalido()" [class.ng-dirty]="usuarioInvalido()" />
+            <label for="cad-usuario">
+              <i class="pi pi-at field-icon" aria-hidden="true"></i>
+              Nome de usuário
+            </label>
+          </p-floatlabel>
+          @if (usuarioInvalido()) {
+            <small id="cad-usuario-err" class="field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              {{ erroMensagem('usuario') }}
+            </small>
+          }
+        </div>
+
+        <!-- Senha -->
+        <div class="form-field" [ngClass]="{ 'form-field--error': senhaInvalida() }">
+          <p-floatlabel variant="on">
+            <p-password inputId="cad-senha" formControlName="senha" [feedback]="true" [toggleMask]="true"
+                        autocomplete="new-password"
+                        [inputStyle]="{ width: '100%' }" [style]="{ width: '100%' }"
+                        [inputStyleClass]="senhaInvalida() ? 'ng-invalid ng-dirty' : ''"
+                        [attr.aria-invalid]="senhaInvalida() || null" aria-describedby="cad-senha-err"
+                        promptLabel="Digite uma senha"
+                        weakLabel="Fraca" mediumLabel="Média" strongLabel="Forte" />
+            <label for="cad-senha">
+              <i class="pi pi-lock field-icon" aria-hidden="true"></i>
+              Senha
+            </label>
+          </p-floatlabel>
+          @if (senhaInvalida()) {
+            <small id="cad-senha-err" class="field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              {{ erroMensagem('senha') }}
+            </small>
+          }
+        </div>
+
+        <!-- Seção: Dados pessoais -->
+        <p class="form-section-title">Dados pessoais</p>
+
+        <!-- Nome + Sobrenome -->
+        <div class="form-row-2">
+          <div class="form-field" [ngClass]="{ 'form-field--error': nomeInvalido() }">
+            <p-floatlabel variant="on">
+              <input pInputText id="cad-nome" formControlName="nome" autocomplete="given-name"
+                     [attr.aria-invalid]="nomeInvalido() || null" aria-describedby="cad-nome-err"
+                     [class.ng-invalid]="nomeInvalido()" [class.ng-dirty]="nomeInvalido()" />
+              <label for="cad-nome">Nome</label>
+            </p-floatlabel>
+            @if (nomeInvalido()) {
+              <small id="cad-nome-err" class="field-error" role="alert">
+                <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+                {{ erroMensagem('nome') }}
+              </small>
+            }
+          </div>
+
+          <div class="form-field" [ngClass]="{ 'form-field--error': sobrenomeInvalido() }">
+            <p-floatlabel variant="on">
+              <input pInputText id="cad-sobrenome" formControlName="sobrenome" autocomplete="family-name"
+                     [attr.aria-invalid]="sobrenomeInvalido() || null" aria-describedby="cad-sobrenome-err"
+                     [class.ng-invalid]="sobrenomeInvalido()" [class.ng-dirty]="sobrenomeInvalido()" />
+              <label for="cad-sobrenome">Sobrenome</label>
+            </p-floatlabel>
+            @if (sobrenomeInvalido()) {
+              <small id="cad-sobrenome-err" class="field-error" role="alert">
+                <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+                {{ erroMensagem('sobrenome') }}
+              </small>
+            }
+          </div>
+        </div>
+
+        <!-- Data de nascimento + Gênero -->
+        <div class="form-row-2">
+          <div class="form-field" [ngClass]="{ 'form-field--error': dataNascimentoInvalido() }">
+            <p-floatlabel variant="on">
+              <input pInputText id="cad-datanascimento" formControlName="dataNascimento"
+                     autocomplete="bday" inputmode="numeric" placeholder="DD/MM/AAAA"
+                     mask="00/00/0000" [dropSpecialCharacters]="false"
+                     [attr.aria-invalid]="dataNascimentoInvalido() || null"
+                     aria-describedby="cad-datanascimento-err"
+                     [class.ng-invalid]="dataNascimentoInvalido()" [class.ng-dirty]="dataNascimentoInvalido()" />
+              <label for="cad-datanascimento">
+                <i class="pi pi-calendar field-icon" aria-hidden="true"></i>
+                Data de nascimento
+              </label>
+            </p-floatlabel>
+            @if (dataNascimentoInvalido()) {
+              <small id="cad-datanascimento-err" class="field-error" role="alert">
+                <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+                {{ erroMensagem('dataNascimento') }}
+              </small>
+            }
+          </div>
+
+          <div class="form-field" [ngClass]="{ 'form-field--error': generoInvalido() }">
+            <p-floatlabel variant="on">
+              <p-select
+                inputId="cad-genero"
+                formControlName="genero"
+                [options]="opcoesGenero"
+                optionLabel="label"
+                optionValue="value"
+                placeholder=" "
+                [style]="{ width: '100%' }"
+                [styleClass]="generoInvalido() ? 'ng-invalid ng-dirty' : ''"
+                [attr.aria-invalid]="generoInvalido() || null"
+                aria-describedby="cad-genero-err"
+              />
+              <label for="cad-genero">
+                <i class="pi pi-venus-mars field-icon" aria-hidden="true"></i>
+                Gênero
+              </label>
+            </p-floatlabel>
+            @if (generoInvalido()) {
+              <small id="cad-genero-err" class="field-error" role="alert">
+                <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+                {{ erroMensagem('genero') }}
+              </small>
+            }
+          </div>
+        </div>
+
+        <!-- CPF + RG -->
+        <div class="form-row-2">
+          <div class="form-field" [ngClass]="{ 'form-field--error': cpfInvalido() }">
+            <p-floatlabel variant="on">
+              <input pInputText id="cad-cpf" formControlName="cpf" autocomplete="off"
+                     inputmode="numeric" maxlength="14"
+                     mask="000.000.000-00" [dropSpecialCharacters]="false"
+                     [attr.aria-invalid]="cpfInvalido() || null" aria-describedby="cad-cpf-err"
+                     [class.ng-invalid]="cpfInvalido()" [class.ng-dirty]="cpfInvalido()" />
+              <label for="cad-cpf">
+                <i class="pi pi-id-card field-icon" aria-hidden="true"></i>
+                CPF
+              </label>
+            </p-floatlabel>
+            @if (cpfInvalido()) {
+              <small id="cad-cpf-err" class="field-error" role="alert">
+                <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+                {{ erroMensagem('cpf') }}
+              </small>
+            }
+          </div>
+
+          <div class="form-field">
+            <p-floatlabel variant="on">
+              <input pInputText id="cad-rg" formControlName="rg" autocomplete="off" maxlength="20" />
+              <label for="cad-rg">
+                <i class="pi pi-id-card field-icon" aria-hidden="true"></i>
+                RG <span class="label-optional">(opcional)</span>
+              </label>
+            </p-floatlabel>
+          </div>
+        </div>
+
+        <!-- Seção: Contato -->
+        <p class="form-section-title">Contato</p>
+
+        <!-- Email principal -->
+        <div class="form-field" [ngClass]="{ 'form-field--error': emailPrincipalInvalido() }">
+          <p-floatlabel variant="on">
+            <input pInputText id="cad-email" type="email" formControlName="emailPrincipal"
+                   autocomplete="email"
+                   [attr.aria-invalid]="emailPrincipalInvalido() || null" aria-describedby="cad-email-err"
+                   [class.ng-invalid]="emailPrincipalInvalido()" [class.ng-dirty]="emailPrincipalInvalido()" />
+            <label for="cad-email">
+              <i class="pi pi-envelope field-icon" aria-hidden="true"></i>
+              E-mail principal
+            </label>
+          </p-floatlabel>
+          @if (emailPrincipalInvalido()) {
+            <small id="cad-email-err" class="field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              {{ erroMensagem('emailPrincipal') }}
+            </small>
+          }
+        </div>
+
+        <!-- Email secundário -->
+        <div class="form-field" [ngClass]="{ 'form-field--error': emailSecundarioInvalido() }">
+          <p-floatlabel variant="on">
+            <input pInputText id="cad-email2" type="email" formControlName="emailSecundario"
+                   autocomplete="email"
+                   [attr.aria-invalid]="emailSecundarioInvalido() || null" aria-describedby="cad-email2-err"
+                   [class.ng-invalid]="emailSecundarioInvalido()" [class.ng-dirty]="emailSecundarioInvalido()" />
+            <label for="cad-email2">
+              <i class="pi pi-envelope field-icon" aria-hidden="true"></i>
+              E-mail secundário <span class="label-optional">(opcional)</span>
+            </label>
+          </p-floatlabel>
+          @if (emailSecundarioInvalido()) {
+            <small id="cad-email2-err" class="field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              {{ erroMensagem('emailSecundario') }}
+            </small>
+          }
+        </div>
+
+        <!-- Telefone principal + secundário -->
+        <div class="form-row-2">
+          <div class="form-field" [ngClass]="{ 'form-field--error': telPrincipalInvalido() }">
+            <p-floatlabel variant="on">
+              <input pInputText id="cad-tel" formControlName="telefonePrincipal"
+                     autocomplete="tel" inputmode="numeric"
+                     mask="(00) 00000-0000" [dropSpecialCharacters]="false"
+                     [attr.aria-invalid]="telPrincipalInvalido() || null" aria-describedby="cad-tel-err"
+                     [class.ng-invalid]="telPrincipalInvalido()" [class.ng-dirty]="telPrincipalInvalido()" />
+              <label for="cad-tel">
+                <i class="pi pi-phone field-icon" aria-hidden="true"></i>
+                Telefone principal
+              </label>
+            </p-floatlabel>
+            @if (telPrincipalInvalido()) {
+              <small id="cad-tel-err" class="field-error" role="alert">
+                <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+                {{ erroMensagem('telefonePrincipal') }}
+              </small>
+            }
+          </div>
+
+          <div class="form-field" [ngClass]="{ 'form-field--error': telSecundarioInvalido() }">
+            <p-floatlabel variant="on">
+              <input pInputText id="cad-tel2" formControlName="telefoneSecundario"
+                     autocomplete="tel" inputmode="numeric"
+                     mask="(00) 0000-00009" [dropSpecialCharacters]="false"
+                     [attr.aria-invalid]="telSecundarioInvalido() || null" aria-describedby="cad-tel2-err"
+                     [class.ng-invalid]="telSecundarioInvalido()" [class.ng-dirty]="telSecundarioInvalido()" />
+              <label for="cad-tel2">
+                <i class="pi pi-phone field-icon" aria-hidden="true"></i>
+                Telefone secundário <span class="label-optional">(opcional)</span>
+              </label>
+            </p-floatlabel>
+            @if (telSecundarioInvalido()) {
+              <small id="cad-tel2-err" class="field-error" role="alert">
+                <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+                {{ erroMensagem('telefoneSecundario') }}
+              </small>
+            }
+          </div>
+        </div>
+
+        <!-- Botão de submit -->
+        <p-button
+          type="submit"
+          label="Criar conta"
+          icon="pi pi-user-plus"
+          iconPos="right"
+          [loading]="isLoading()"
+          [disabled]="isLoading()"
+          styleClass="cadastro-submit-btn"
+          aria-label="Criar conta"
+        />
+
+      </form>
+
+      <p class="login-text">
+        Já tem uma conta?
+        <a routerLink="/" class="login-link">Faça o login</a>
+      </p>
+
+      <footer class="cadastro-footer">
+        <p class="cadastro-footer__text">
+          © {{ currentYear }} Commerce ERP. Todos os direitos reservados.
+        </p>
+        <nav class="cadastro-footer__links" aria-label="Links úteis">
+          <a href="#" class="cadastro-footer__link">Termos de uso</a>
+          <span aria-hidden="true">·</span>
+          <a href="#" class="cadastro-footer__link">Privacidade</a>
+          <span aria-hidden="true">·</span>
+          <a href="#" class="cadastro-footer__link">Suporte</a>
+        </nav>
+      </footer>
+
+    </div>
+  </main>
+
+</div>

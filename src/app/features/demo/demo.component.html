@@ -1,0 +1,388 @@
+<div class="demo-page">
+  <header class="demo-page__header">
+    <h1 class="demo-page__title">Demonstração PrimeNG</h1>
+    <p class="demo-page__subtitle">
+      Validação visual e funcional dos componentes disponíveis na configuração atual.
+    </p>
+  </header>
+
+  <!-- ── Seção: Botões ─────────────────────────────────────────────── -->
+  <section class="demo-section" aria-labelledby="section-buttons">
+    <h2 id="section-buttons" class="demo-section__title">Botões</h2>
+
+    <div class="demo-section__content">
+      <p-card>
+        <div class="button-group">
+          <p-button label="Primário"    severity="primary"   />
+          <p-button label="Secundário"  severity="secondary" />
+          <p-button label="Sucesso"     severity="success"   />
+          <p-button label="Aviso"       severity="warn"      />
+          <p-button label="Perigo"      severity="danger"    />
+          <p-button label="Informação"  severity="info"      />
+        </div>
+
+        <p-divider />
+
+        <div class="button-group">
+          <p-button label="Outlined"  severity="primary"   [outlined]="true" />
+          <p-button label="Text"      severity="primary"   [text]="true"     />
+          <p-button label="Raised"    severity="primary"   [raised]="true"   />
+          <p-button label="Arredondado" severity="primary" [rounded]="true"  />
+          <p-button icon="pi pi-check" severity="success"  [rounded]="true" aria-label="Confirmar" />
+          <p-button icon="pi pi-trash" severity="danger"   [outlined]="true" label="Excluir" />
+        </div>
+
+        <p-divider />
+
+        <div class="button-group">
+          <p-button label="Carregando" [loading]="true" severity="primary" />
+          <p-button label="Desabilitado" [disabled]="true" severity="primary" />
+        </div>
+      </p-card>
+    </div>
+  </section>
+
+  <!-- ── Seção: Formulários ────────────────────────────────────────── -->
+  <section class="demo-section" aria-labelledby="section-forms">
+    <h2 id="section-forms" class="demo-section__title">Formulários</h2>
+
+    <div class="demo-section__content">
+      <p-card>
+        <div class="form-grid">
+
+          <!-- Campo de texto com FloatLabel -->
+          <div class="form-field">
+            <p-floatlabel>
+              <input
+                pInputText
+                id="demo-text"
+                [(ngModel)]="textValue"
+                autocomplete="off"
+              />
+              <label for="demo-text">Nome do produto</label>
+            </p-floatlabel>
+          </div>
+
+          <!-- Select -->
+          <div class="form-field">
+            <label for="demo-select" class="form-label">Categoria</label>
+            <p-select
+              inputId="demo-select"
+              [options]="categoryOptions"
+              [(ngModel)]="selectedOption"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Selecione uma categoria"
+              [style]="{ width: '100%' }"
+            />
+          </div>
+
+          <!-- Textarea -->
+          <div class="form-field form-field--full">
+            <label for="demo-textarea" class="form-label">Descrição</label>
+            <textarea
+              pTextarea
+              id="demo-textarea"
+              [(ngModel)]="textareaValue"
+              rows="3"
+              placeholder="Descreva o produto..."
+              [autoResize]="true"
+              [style]="{ width: '100%' }"
+            ></textarea>
+          </div>
+
+          <!-- Checkbox -->
+          <div class="form-field form-field--inline">
+            <p-checkbox
+              inputId="demo-checkbox"
+              [(ngModel)]="checkboxValue"
+              [binary]="true"
+            />
+            <label for="demo-checkbox">Produto em destaque</label>
+          </div>
+
+          <!-- Toggle Switch -->
+          <div class="form-field form-field--inline">
+            <p-toggleswitch
+              inputId="demo-toggle"
+              [(ngModel)]="toggleValue"
+            />
+            <label for="demo-toggle">Produto ativo</label>
+          </div>
+
+          <!-- Radio Buttons -->
+          <div class="form-field">
+            <span class="form-label" id="radio-group-label">Disponibilidade</span>
+            <div class="radio-group" role="radiogroup" aria-labelledby="radio-group-label">
+              <div class="radio-option">
+                <p-radiobutton inputId="radio-yes" name="availability" value="yes" [(ngModel)]="radioValue" />
+                <label for="radio-yes">Disponível</label>
+              </div>
+              <div class="radio-option">
+                <p-radiobutton inputId="radio-no" name="availability" value="no" [(ngModel)]="radioValue" />
+                <label for="radio-no">Indisponível</label>
+              </div>
+              <div class="radio-option">
+                <p-radiobutton inputId="radio-soon" name="availability" value="soon" [(ngModel)]="radioValue" />
+                <label for="radio-soon">Em breve</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Mensagem de validação de exemplo -->
+        <p-message
+          class="demo-form-message"
+          severity="warn"
+          text="Preencha todos os campos obrigatórios antes de salvar."
+        />
+
+        <div class="form-actions">
+          <p-button label="Cancelar"  severity="secondary" [outlined]="true" />
+          <p-button label="Salvar"    severity="primary"   icon="pi pi-check" />
+        </div>
+      </p-card>
+    </div>
+  </section>
+
+  <!-- ── Seção: Tags e Badges ──────────────────────────────────────── -->
+  <section class="demo-section" aria-labelledby="section-tags">
+    <h2 id="section-tags" class="demo-section__title">Tags e Badges</h2>
+
+    <div class="demo-section__content">
+      <p-card>
+        <div class="tag-group">
+          <p-tag value="Sucesso"    severity="success"   />
+          <p-tag value="Aviso"      severity="warn"      />
+          <p-tag value="Perigo"     severity="danger"    />
+          <p-tag value="Informação" severity="info"      />
+          <p-tag value="Secundário" severity="secondary" />
+        </div>
+
+        <p-divider />
+
+        <div class="badge-group">
+          <p-badge value="3"  severity="success" />
+          <p-badge value="7"  severity="warn"    />
+          <p-badge value="12" severity="danger"  />
+          <p-badge value="99+"                   />
+
+          <p-button
+            label="Pedidos"
+            severity="secondary"
+            [outlined]="true"
+            icon="pi pi-shopping-cart"
+            pBadge
+            badgeValue="5"
+            badgeSeverity="danger"
+          />
+        </div>
+
+        <p-divider />
+
+        <!-- Ícones PrimeIcons -->
+        <div class="icon-group" aria-label="Exemplos de ícones">
+          <i class="pi pi-home"          pTooltip="Home"          aria-hidden="true"></i>
+          <i class="pi pi-user"          pTooltip="Usuário"       aria-hidden="true"></i>
+          <i class="pi pi-cog"           pTooltip="Configurações" aria-hidden="true"></i>
+          <i class="pi pi-shopping-cart" pTooltip="Carrinho"      aria-hidden="true"></i>
+          <i class="pi pi-chart-bar"     pTooltip="Relatórios"    aria-hidden="true"></i>
+          <i class="pi pi-bell"          pTooltip="Notificações"  aria-hidden="true"></i>
+          <i class="pi pi-check-circle"  pTooltip="Concluído"     aria-hidden="true"></i>
+          <i class="pi pi-times-circle"  pTooltip="Cancelado"     aria-hidden="true"></i>
+          <i class="pi pi-info-circle"   pTooltip="Info"          aria-hidden="true"></i>
+        </div>
+      </p-card>
+    </div>
+  </section>
+
+  <!-- ── Seção: Tabela de Dados ────────────────────────────────────── -->
+  <section class="demo-section" aria-labelledby="section-table">
+    <h2 id="section-table" class="demo-section__title">Tabela de Dados</h2>
+
+    <div class="demo-section__content">
+      <p-card>
+        <p-table
+          [value]="products"
+          [paginator]="true"
+          [rows]="5"
+          styleClass="p-datatable-striped p-datatable-gridlines"
+          responsiveLayout="scroll"
+          aria-label="Lista de produtos"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="id"       scope="col" style="width:4rem">ID <p-sortIcon field="id" /></th>
+              <th pSortableColumn="name"     scope="col">Nome <p-sortIcon field="name" /></th>
+              <th pSortableColumn="category" scope="col">Categoria <p-sortIcon field="category" /></th>
+              <th pSortableColumn="price"    scope="col" style="text-align:right">Preço <p-sortIcon field="price" /></th>
+              <th                            scope="col" style="width:8rem">Status</th>
+              <th                            scope="col" style="width:5rem">Ações</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-product>
+            <tr>
+              <td>{{ product.id }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.category }}</td>
+              <td style="text-align:right">{{ formatPrice(product.price) }}</td>
+              <td>
+                <p-tag
+                  [value]="getStatusLabel(product.status)"
+                  [severity]="getStatusSeverity(product.status)"
+                />
+              </td>
+              <td>
+                <p-button
+                  icon="pi pi-pencil"
+                  severity="secondary"
+                  [text]="true"
+                  [rounded]="true"
+                  [attr.aria-label]="'Editar ' + product.name"
+                  pTooltip="Editar"
+                />
+                <p-button
+                  icon="pi pi-trash"
+                  severity="danger"
+                  [text]="true"
+                  [rounded]="true"
+                  [attr.aria-label]="'Excluir ' + product.name"
+                  pTooltip="Excluir"
+                  (onClick)="confirmDelete()"
+                />
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 2rem;">
+                <i class="pi pi-inbox" style="font-size: 2rem; color: var(--p-text-muted-color)"></i>
+                <p style="margin-top: 0.5rem; color: var(--p-text-muted-color)">Nenhum produto encontrado.</p>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+  </section>
+
+  <!-- ── Seção: Notificações ───────────────────────────────────────── -->
+  <section class="demo-section" aria-labelledby="section-notifications">
+    <h2 id="section-notifications" class="demo-section__title">Notificações e Confirmações</h2>
+
+    <div class="demo-section__content">
+      <p-card>
+        <div class="button-group">
+          <p-button label="Sucesso"    severity="success"   icon="pi pi-check"             (onClick)="showSuccess()"   />
+          <p-button label="Info"       severity="info"      icon="pi pi-info-circle"        (onClick)="showInfo()"      />
+          <p-button label="Aviso"      severity="warn"      icon="pi pi-exclamation-circle" (onClick)="showWarn()"      />
+          <p-button label="Erro"       severity="danger"    icon="pi pi-times-circle"       (onClick)="showError()"     />
+          <p-button label="Confirmar"  severity="secondary" icon="pi pi-question-circle"    (onClick)="confirmDelete()" />
+          <p-button label="Abrir Dialog" severity="primary" icon="pi pi-external-link"      (onClick)="openDialog()"    />
+        </div>
+      </p-card>
+    </div>
+  </section>
+
+  <!-- ── Seção: Carregamento e Skeleton ───────────────────────────── -->
+  <section class="demo-section" aria-labelledby="section-loading">
+    <h2 id="section-loading" class="demo-section__title">Carregamento</h2>
+
+    <div class="demo-section__content">
+      <p-card>
+        <div class="loading-demo">
+          @if (loading()) {
+            <p-progressspinner
+              strokeWidth="4"
+              aria-label="Carregando dados..."
+            />
+          } @else {
+            <p class="loading-demo__placeholder">
+              <i class="pi pi-check-circle" style="color: var(--p-green-500)"></i>
+              Dados carregados com sucesso
+            </p>
+          }
+        </div>
+
+        <p-button
+          [label]="loading() ? 'Carregando...' : 'Simular carregamento'"
+          [loading]="loading()"
+          severity="secondary"
+          icon="pi pi-refresh"
+          (onClick)="simulateLoading()"
+          styleClass="u-mt-md"
+        />
+
+        <p-divider />
+
+        <div class="skeleton-demo" aria-label="Exemplo de skeleton loading">
+          <p-skeleton width="40%" height="1.5rem" styleClass="mb-2" />
+          <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="80%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="60%" height="1rem" />
+        </div>
+      </p-card>
+    </div>
+  </section>
+
+  <!-- ── Seção: Layout Responsivo ─────────────────────────────────── -->
+  <section class="demo-section" aria-labelledby="section-layout">
+    <h2 id="section-layout" class="demo-section__title">Layout Responsivo</h2>
+
+    <div class="demo-section__content">
+      <div class="responsive-grid">
+        <p-card header="Vendas do Mês" subheader="Outubro 2026">
+          <div class="metric">
+            <span class="metric__value">R$ 128.400</span>
+            <p-tag value="+12%" severity="success" />
+          </div>
+          <p class="metric__description">Comparado ao mês anterior</p>
+        </p-card>
+
+        <p-card header="Pedidos Pendentes" subheader="Aguardando processamento">
+          <div class="metric">
+            <span class="metric__value">47</span>
+            <p-tag value="+8" severity="warn" />
+          </div>
+          <p class="metric__description">Novos pedidos hoje</p>
+        </p-card>
+
+        <p-card header="Clientes Ativos" subheader="Base de clientes">
+          <div class="metric">
+            <span class="metric__value">1.284</span>
+            <p-tag value="+23" severity="info" />
+          </div>
+          <p class="metric__description">Novos cadastros neste mês</p>
+        </p-card>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ── Dialog ───────────────────────────────────────────────────────── -->
+<p-dialog
+  header="Exemplo de Dialog"
+  [(visible)]="dialogVisible"
+  [modal]="true"
+  [style]="{ width: '480px', maxWidth: '95vw' }"
+  [draggable]="false"
+  role="dialog"
+  aria-labelledby="dialog-title"
+>
+  <p id="dialog-title">
+    Este é um exemplo de dialog modal do PrimeNG. Pode ser utilizado para
+    formulários, confirmações, detalhes ou qualquer conteúdo contextual.
+  </p>
+
+  <p-divider />
+
+  <p-message severity="info" text="Os dados exibidos aqui são fictícios." />
+
+  <ng-template pTemplate="footer">
+    <p-button label="Fechar"   severity="secondary" [outlined]="true" (onClick)="closeDialog()" />
+    <p-button label="Confirmar" severity="primary"  icon="pi pi-check" (onClick)="closeDialog()" />
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,199 @@
+.demo-page {
+  max-width: 1200px;
+}
+
+// ── Cabeçalho da página ──────────────────────────────────────────────
+.demo-page__header {
+  margin-bottom: 2rem;
+}
+
+.demo-page__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--p-text-color);
+  margin: 0 0 0.5rem;
+}
+
+.demo-page__subtitle {
+  color: var(--p-text-muted-color);
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+// ── Seções ───────────────────────────────────────────────────────────
+.demo-section {
+  margin-bottom: 2.5rem;
+}
+
+.demo-section__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--p-text-color);
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--p-primary-color);
+  display: inline-block;
+}
+
+.demo-section__content {
+  // Contêiner que deixa os cards se expandirem normalmente
+}
+
+// ── Grupos de botões ─────────────────────────────────────────────────
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+// ── Formulários ──────────────────────────────────────────────────────
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+
+  &--full {
+    grid-column: 1 / -1;
+  }
+
+  &--inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 0.25rem;
+  }
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--p-text-color);
+}
+
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+// ── Tags e Badges ─────────────────────────────────────────────────────
+.tag-group,
+.badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+// ── Ícones ────────────────────────────────────────────────────────────
+.icon-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+
+  i {
+    font-size: 1.375rem;
+    color: var(--p-primary-color);
+    cursor: default;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--p-primary-700, var(--p-primary-color));
+    }
+  }
+}
+
+// ── Carregamento ──────────────────────────────────────────────────────
+.loading-demo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 6rem;
+}
+
+.loading-demo__placeholder {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--p-text-muted-color);
+  font-size: 0.9375rem;
+
+  i { font-size: 1.25rem; }
+}
+
+.skeleton-demo {
+  margin-top: 0.5rem;
+}
+
+// ── Grid responsivo de cartões ────────────────────────────────────────
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.metric__value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--p-text-color);
+}
+
+.metric__description {
+  font-size: 0.8125rem;
+  color: var(--p-text-muted-color);
+  margin: 0;
+}
+
+// ── Responsividade ─────────────────────────────────────────────────────
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-field--full {
+    grid-column: 1;
+  }
+
+  .demo-page__title {
+    font-size: 1.375rem;
+  }
+
+  .button-group {
+    gap: 0.5rem;
+  }
+}
+
+// Mensagem de validação dentro do form card
+.demo-form-message {
+  display: block;
+  margin-top: 1rem;
+  width: 100%;
+}

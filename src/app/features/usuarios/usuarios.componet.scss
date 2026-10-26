@@ -1,0 +1,170 @@
+.usuarios-page {
+    max-width: 1200px;
+}
+
+.usuarios-page__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.usuarios-page__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--p-text-color);
+    margin: 0 0 0.25rem;
+}
+
+.usuarios-page__subtitle {
+    color: var(--p-text-muted-color);
+    font-size: 0.9375rem;
+    margin: 0;
+}
+
+.usuarios-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    align-items: center;
+
+    &__search {
+        flex: 1 1 260px;
+
+        input {
+            width: 100%;
+        }
+    }
+
+    &__select {
+        min-width: 180px;
+    }
+}
+
+.usuarios-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 10rem;
+}
+
+.usuarios-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 2.5rem 1rem;
+    color: var(--p-text-muted-color);
+
+    i { font-size: 2.5rem; }
+    p { margin: 0; font-size: 0.9375rem; }
+}
+
+.col-status {
+    width: 7rem;
+    text-align: center;
+}
+
+.col-acoes {
+    width: 8rem;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.cell-nome { font-weight: 500; }
+
+.cell-sub {
+    display: block;
+    color: var(--p-text-muted-color);
+    font-size: 0.8125rem;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.5rem;
+}
+
+.details-item {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    overflow-wrap: anywhere;
+    color: var(--p-text-color);
+}
+
+.details-label {
+    color: var(--p-text-muted-color);
+    font-size: 0.8125rem;
+}
+
+// ── Formulário modal: mesmo grid e espaçamento da tela de Produtos ──
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+
+    &--full {
+        grid-column: 1 / -1;
+    }
+
+    &--error input,
+    &--error .p-inputtext {
+        border-color: var(--p-red-500);
+    }
+}
+
+.form-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--p-text-color);
+}
+
+.required {
+    color: var(--p-red-500);
+    margin-left: 0.125rem;
+}
+
+.field-error {
+    color: var(--p-red-500);
+    font-size: 0.8125rem;
+}
+
+@media (max-width: 640px) {
+    .usuarios-page__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-field--full {
+        grid-column: 1;
+    }
+
+    .usuarios-toolbar {
+        flex-direction: column;
+
+        &__search,
+        &__select {
+            width: 100%;
+        }
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}

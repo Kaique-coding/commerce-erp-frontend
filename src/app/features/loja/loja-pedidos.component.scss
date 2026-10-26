@@ -1,0 +1,29 @@
+.pedidos { width: min(100%, 1120px); margin: 0 auto; }
+.pedidos__header { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+.pedidos__header h1 { margin: 0.35rem 0; color: var(--p-text-color); font-size: 1.8rem; }
+.pedidos__header p { margin: 0; color: var(--p-text-muted-color); }
+.pedidos__eyebrow { color: var(--p-primary-color); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; }
+.pedidos__continuar { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--p-primary-color); font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+.pedidos__continuar:hover { text-decoration: underline; }
+.pedidos__lista { display: grid; gap: 1rem; }
+.pedido-card { overflow: hidden; border: 1px solid var(--p-surface-200); border-radius: 0.9rem; background: var(--p-surface-0); box-shadow: 0 3px 12px rgb(15 23 42 / 4%); }
+.pedido-card__header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--p-surface-200); background: var(--p-surface-50); }
+.pedido-card__referencia { color: var(--p-text-color); font-size: 0.95rem; font-weight: 700; }
+.pedido-card__header p { margin: 0.3rem 0 0; color: var(--p-text-muted-color); font-size: 0.82rem; }
+.pedido-card__produtos { padding: 0 1.25rem; }
+.pedido-item { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; align-items: center; gap: 0.85rem; padding: 0.9rem 0; border-bottom: 1px solid var(--p-surface-100); }
+.pedido-item:last-child { border-bottom: 0; }
+.pedido-item__icone { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 0.65rem; background: var(--p-primary-50, #eef2ff); color: var(--p-primary-color); }
+.pedido-item__dados { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.pedido-item__dados strong { overflow: hidden; color: var(--p-text-color); font-size: 0.9rem; text-overflow: ellipsis; white-space: nowrap; }
+.pedido-item__dados span { color: var(--p-text-muted-color); font-size: 0.8rem; }
+.pedido-item__subtotal { color: var(--p-text-color); font-size: 0.88rem; white-space: nowrap; }
+.pedido-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; border-top: 1px solid var(--p-surface-200); color: var(--p-text-muted-color); font-size: 0.82rem; }
+.pedido-card__footer div { display: flex; align-items: center; gap: 0.75rem; color: var(--p-text-color); }
+.pedido-card__footer strong { color: var(--p-primary-color); font-size: 1rem; }
+.pedidos__estado { min-height: 18rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; color: var(--p-text-muted-color); text-align: center; }
+.pedidos__estado > i { color: var(--p-primary-color); font-size: 2.2rem; }
+.pedidos__estado strong, .pedidos__estado h2 { margin: 0; color: var(--p-text-color); }
+.pedidos__estado p { max-width: 32rem; margin: 0; }
+.pedidos__estado--erro > i { color: var(--p-red-500, #ef4444); }
+@media (max-width: 600px) { .pedidos__header { align-items: flex-start; flex-direction: column; } .pedido-card__header, .pedido-card__footer { align-items: flex-start; flex-direction: column; } .pedido-card__footer div { width: 100%; justify-content: space-between; } }

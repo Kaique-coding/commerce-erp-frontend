@@ -1,0 +1,417 @@
+<div class="produtos-page">
+
+  <!-- ── Cabeçalho ─────────────────────────────────────────────────── -->
+  <header class="produtos-page__header">
+    <div>
+      <h1 class="produtos-page__title">Produtos</h1>
+      <p class="produtos-page__subtitle">Gerencie o cadastro de produtos do sistema.</p>
+    </div>
+    <p-button
+      label="Novo produto"
+      icon="pi pi-plus"
+      (onClick)="abrirFormulario()"
+      aria-label="Cadastrar novo produto"
+    />
+  </header>
+
+  <!-- ── Barra de busca + filtro de status ─────────────────────────── -->
+  <div class="produtos-toolbar">
+    <span class="p-input-icon-left produtos-toolbar__search">
+      <i class="pi pi-search" aria-hidden="true"></i>
+      <input
+        pInputText
+        type="search"
+        [ngModel]="filtroTexto()"
+        (ngModelChange)="atualizarPesquisa($event)"
+        placeholder="Buscar por nome, marca, modelo ou ID..."
+        aria-label="Buscar produto"
+      />
+    </span>
+
+    <p-select
+      [options]="opcoesStatus"
+      [ngModel]="filtroStatus()"
+      (ngModelChange)="filtroStatus.set($event)"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Todos os status"
+      [showClear]="true"
+      aria-label="Filtrar por status"
+      styleClass="produtos-toolbar__select"
+    />
+  </div>
+
+  <!-- ── Tabela ─────────────────────────────────────────────────────── -->
+  <p-card>
+    @if (carregando()) {
+      <div class="produtos-loading" aria-label="Carregando produtos">
+        <p-progressspinner strokeWidth="4" />
+      </div>
+    } @else {
+      <p-table
+        [value]="produtosFiltrados()"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [globalFilterFields]="['nome','marca','modelo']"
+        styleClass="p-datatable-striped p-datatable-gridlines"
+        responsiveLayout="scroll"
+        aria-label="Lista de produtos"
+        [rowHover]="true"
+        dataKey="id"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="nome"       scope="col">Nome           <p-sortIcon field="nome"       /></th>
+            <th pSortableColumn="marca"      scope="col">Marca          <p-sortIcon field="marca"      /></th>
+            <th pSortableColumn="valorVenda" scope="col" class="col-num">Valor venda    <p-sortIcon field="valorVenda" /></th>
+            <th pSortableColumn="estoque"    scope="col" class="col-num">Estoque        <p-sortIcon field="estoque"    /></th>
+            <th                              scope="col" class="col-status">Status</th>
+            <th                              scope="col" class="col-acoes">Ações</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-produto>
+          <tr>
+            <td>
+              <div class="cell-nome">{{ produto.nome }}</div>
+              @if (produto.modelo) {
+                <small class="cell-sub">{{ produto.modelo }}</small>
+              }
+            </td>
+            <td>{{ produto.marca ?? '—' }}</td>
+            <td class="col-num">{{ formatarMoeda(produto.valorVenda) }}</td>
+            <td class="col-num">
+              {{ produto.estoque ?? '—' }}
+              @if (produto.unidadeMedidaVenda) {
+                <small class="cell-sub">{{ produto.unidadeMedidaVenda }}</small>
+              }
+            </td>
+            <td class="col-status">
+              <p-tag
+                [value]="produto.ativo ? 'Ativo' : 'Inativo'"
+                [severity]="produto.ativo ? 'success' : 'secondary'"
+              />
+            </td>
+            <td class="col-acoes">
+              <p-button
+                icon="pi pi-eye"
+                severity="secondary"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Visualizar"
+                tooltipPosition="top"
+                [attr.aria-label]="'Visualizar ' + produto.nome"
+                (onClick)="visualizarProduto(produto)"
+              />
+              <p-button
+                icon="pi pi-pencil"
+                severity="secondary"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Editar"
+                tooltipPosition="top"
+                [attr.aria-label]="'Editar ' + produto.nome"
+                (onClick)="abrirEdicao(produto)"
+              />
+              <p-button
+                [icon]="produto.ativo ? 'pi pi-ban' : 'pi pi-check-circle'"
+                [severity]="produto.ativo ? 'warn' : 'success'"
+                [text]="true"
+                [rounded]="true"
+                [pTooltip]="produto.ativo ? 'Inativar' : 'Ativar'"
+                tooltipPosition="top"
+                [attr.aria-label]="(produto.ativo ? 'Inativar ' : 'Ativar ') + produto.nome"
+                (onClick)="confirmarAlteracaoStatus(produto)"
+              />
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Excluir"
+                tooltipPosition="top"
+                [attr.aria-label]="'Excluir ' + produto.nome"
+                (onClick)="confirmarExclusao(produto)"
+              />
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">
+              <div class="produtos-empty">
+                <i class="pi pi-box" aria-hidden="true"></i>
+                <p>Nenhum produto encontrado.</p>
+                <p-button label="Cadastrar produto" icon="pi pi-plus" severity="secondary" [outlined]="true" (onClick)="abrirFormulario()" />
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    }
+  </p-card>
+
+</div>
+
+<!-- ── Dialog: Formulário cadastro / edição ───────────────────────── -->
+<p-dialog
+  [(visible)]="dialogVisivel"
+  [header]="modoEdicao() ? 'Editar produto' : 'Novo produto'"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="produtos-dialog"
+  [style]="{ width: '760px', maxWidth: '98vw' }"
+  (onHide)="fecharFormulario()"
+>
+
+  <form [formGroup]="form" novalidate (ngSubmit)="salvar()" aria-label="Formulário de produto">
+
+    <!-- Linha 1: nome (full-width) -->
+    <div class="form-row">
+      <div class="form-field form-field--full" [class.form-field--error]="invalido('nome')">
+        <label for="prd-nome" class="form-label">Nome <span aria-hidden="true" class="required">*</span></label>
+        <input pInputText id="prd-nome" formControlName="nome" autocomplete="off"
+               [attr.aria-invalid]="invalido('nome') || null" aria-describedby="prd-nome-err" />
+        @if (invalido('nome')) {
+          <small id="prd-nome-err" class="field-error" role="alert">
+            <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+            {{ erroMensagem('nome') }}
+          </small>
+        }
+      </div>
+    </div>
+
+    <!-- Linha 2: marca / modelo / cor -->
+    <div class="form-row">
+      <div class="form-field">
+        <label for="prd-marca" class="form-label">Marca</label>
+        <input pInputText id="prd-marca" formControlName="marca" autocomplete="off" />
+      </div>
+      <div class="form-field">
+        <label for="prd-modelo" class="form-label">Modelo</label>
+        <input pInputText id="prd-modelo" formControlName="modelo" autocomplete="off" />
+      </div>
+      <div class="form-field">
+        <label for="prd-cor" class="form-label">Cor</label>
+        <input pInputText id="prd-cor" formControlName="cor" autocomplete="off" />
+      </div>
+    </div>
+
+    <!-- Linha 3: descrição -->
+    <div class="form-row">
+      <div class="form-field form-field--full">
+        <label for="prd-descricao" class="form-label">Descrição</label>
+        <textarea
+          pTextarea
+          id="prd-descricao"
+          formControlName="descricao"
+          [autoResize]="true"
+          rows="3"
+          style="width:100%"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field form-field--full">
+        <label for="prd-imagem" class="form-label">Imagem do produto</label>
+        <p class="image-upload__hint">PNG, JPG ou WebP · até 5 MB</p>
+        <input
+          #imagemInput
+          id="prd-imagem"
+          class="image-upload__input"
+          type="file"
+          accept="image/png,image/jpeg,image/webp"
+          aria-describedby="prd-imagem-help prd-imagem-error"
+          (change)="selecionarImagem($event)"
+        />
+        <small id="prd-imagem-help" class="image-upload__hint">
+          @if (modoEdicao()) {
+            Selecione uma nova foto para substituir a atual. Sem selecionar arquivo, a imagem existente será mantida.
+          } @else {
+            A imagem será enviada junto aos dados do produto.
+          }
+        </small>
+        @if (erroImagem()) {
+          <small id="prd-imagem-error" class="field-error" role="alert">
+            <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+            {{ erroImagem() }}
+          </small>
+        }
+        @if (previewImagem(); as preview) {
+          <div class="image-upload__preview">
+            <img [src]="preview" [alt]="imagemSelecionada() ? 'Pré-visualização da nova imagem' : 'Imagem atual do produto'" />
+            <div>
+              <strong>{{ imagemSelecionada()?.name ?? nomeImagemOriginal() }}</strong>
+              @if (imagemSelecionada()) {
+                <small>{{ ((imagemSelecionada()?.size ?? 0) / 1024 / 1024).toFixed(2) }} MB</small>
+              } @else {
+                <small>Imagem atual</small>
+              }
+            </div>
+            @if (imagemSelecionada()) {
+              <button type="button" class="image-upload__remove" (click)="removerImagem(imagemInput)" aria-label="Descartar nova imagem selecionada">
+                <i class="pi pi-times" aria-hidden="true"></i>
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Linha 4: valor venda / valor compra -->
+    <div class="form-row">
+      <div class="form-field" [class.form-field--error]="invalido('valorVenda')">
+        <label for="prd-vvenda" class="form-label">Valor de venda <span aria-hidden="true" class="required">*</span></label>
+        <p-inputnumber
+          inputId="prd-vvenda"
+          formControlName="valorVenda"
+          mode="currency"
+          currency="BRL"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+          [attr.aria-invalid]="invalido('valorVenda') || null"
+          aria-describedby="prd-vvenda-err"
+        />
+        @if (invalido('valorVenda')) {
+          <small id="prd-vvenda-err" class="field-error" role="alert">
+            <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+            {{ erroMensagem('valorVenda') }}
+          </small>
+        }
+      </div>
+      <div class="form-field">
+        <label for="prd-vcompra" class="form-label">Valor de compra</label>
+        <p-inputnumber
+          inputId="prd-vcompra"
+          formControlName="valorCompra"
+          mode="currency"
+          currency="BRL"
+          locale="pt-BR"
+          [minFractionDigits]="2"
+        />
+      </div>
+    </div>
+
+    <!-- Linha 5: estoque / mín / máx -->
+    <div class="form-row">
+      <div class="form-field">
+        <label for="prd-estoque" class="form-label">Estoque</label>
+        <p-inputnumber inputId="prd-estoque" formControlName="estoque" [minFractionDigits]="0" [maxFractionDigits]="3" />
+      </div>
+      <div class="form-field">
+        <label for="prd-emin" class="form-label">Estoque mínimo</label>
+        <p-inputnumber inputId="prd-emin" formControlName="estoqueMinimo" [minFractionDigits]="0" [maxFractionDigits]="3" />
+      </div>
+      <div class="form-field">
+        <label for="prd-emax" class="form-label">Estoque máximo</label>
+        <p-inputnumber inputId="prd-emax" formControlName="estoqueMaximo" [minFractionDigits]="0" [maxFractionDigits]="3" />
+      </div>
+    </div>
+
+    <!-- Linha 6: unidades de medida -->
+    <div class="form-row">
+      <div class="form-field">
+        <label for="prd-umcompra" class="form-label">Unidade de compra</label>
+        <p-select
+          inputId="prd-umcompra"
+          formControlName="unidadeMedidaCompra"
+          [options]="opcoesUnidade"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Selecione"
+          [showClear]="true"
+          styleClass="w-full"
+        />
+      </div>
+      <div class="form-field">
+        <label for="prd-umvenda" class="form-label">Unidade de venda</label>
+        <p-select
+          inputId="prd-umvenda"
+          formControlName="unidadeMedidaVenda"
+          [options]="opcoesUnidade"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Selecione"
+          [showClear]="true"
+          styleClass="w-full"
+        />
+      </div>
+    </div>
+
+    <!-- Linha 7: localização / ativo -->
+    <div class="form-row">
+      <div class="form-field">
+        <label for="prd-local" class="form-label">Localização</label>
+        <input pInputText id="prd-local" formControlName="localizacao" autocomplete="off" />
+      </div>
+      <div class="form-field form-field--inline">
+        <p-toggleswitch inputId="prd-ativo" formControlName="ativo" />
+        <label for="prd-ativo" class="form-label">Produto ativo</label>
+      </div>
+    </div>
+
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="fecharFormulario()"
+      [disabled]="salvando()"
+    />
+    <p-button
+      [label]="modoEdicao() ? 'Salvar alterações' : 'Cadastrar'"
+      icon="pi pi-check"
+      [loading]="salvando()"
+      (onClick)="salvar()"
+    />
+  </ng-template>
+
+</p-dialog>
+
+<p-dialog
+  header="Dados do produto"
+  [visible]="detalhesVisiveis()"
+  (visibleChange)="detalhesVisiveis.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="produtos-detalhes-dialog"
+  [style]="{ width: '640px', maxWidth: '96vw' }"
+>
+  @if (carregandoDetalhes()) {
+    <div class="details-loading" role="status" aria-label="Carregando dados do produto">
+      <p-progressspinner strokeWidth="4" />
+      <span>Carregando dados do produto...</span>
+    </div>
+  } @else if (produtoSelecionado(); as produto) {
+    <div class="details-grid">
+      @if (imagemProdutoSrc(produto); as imagem) {
+        <figure class="details-image">
+          <img [src]="imagem" [alt]="'Imagem de ' + produto.nome" />
+          @if (produto.imagem?.nomeArquivo) {
+            <figcaption>{{ produto.imagem?.nomeArquivo }}</figcaption>
+          }
+        </figure>
+      }
+      <div class="details-item"><span class="details-label">Nome do produto</span><span>{{ produto.nome }}</span></div>
+      <div class="details-item"><span class="details-label">Marca</span><span>{{ produto.marca || '—' }}</span></div>
+      <div class="details-item"><span class="details-label">Modelo</span><span>{{ produto.modelo || '—' }}</span></div>
+      <div class="details-item details-item--full"><span class="details-label">Descrição</span><span>{{ produto.descricao || '—' }}</span></div>
+      <div class="details-item"><span class="details-label">Estoque</span><span>{{ produto.estoque ?? '—' }}{{ produto.unidadeMedidaVenda ? ' ' + produto.unidadeMedidaVenda : '' }}</span></div>
+      <div class="details-item"><span class="details-label">Localização</span><span>{{ produto.localizacao || '—' }}</span></div>
+      <div class="details-item"><span class="details-label">Valor de venda</span><span>{{ formatarMoeda(produto.valorVenda) }}</span></div>
+      <div class="details-item"><span class="details-label">Valor de compra</span><span>{{ formatarMoeda(produto.valorCompra) }}</span></div>
+      <div class="details-item"><span class="details-label">Unidade de medida venda</span><span>{{ produto.unidadeMedidaVenda }}</span></div>
+      <div class="details-item"><span class="details-label">Unidade de medida compra</span><span>{{ produto.unidadeMedidaCompra }}</span></div>
+    </div>
+  }
+</p-dialog>
+
+<!-- ConfirmDialog do PrimeNG (usado pelo NotificationService) -->
+<p-confirmDialog />
