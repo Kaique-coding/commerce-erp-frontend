@@ -6,20 +6,20 @@ import { environment }        from '../../../environments/environment';
 import { UsuarioRequestDto }  from '../dto/usuario.request.dto';
 import { UsuarioResponseDto } from '../dto/usuario.response.dto';
 
-/**
- * Serviço HTTP para o recurso Usuário.
- *
- * Endpoints (base /api — todos exigem autenticação exceto onde liberado no SecurityConfig):
- *   POST   /api/usuario       → UsuarioResponseDto   (cadastro)
- *   GET    /api/usuarios      → UsuarioResponseDto[]
- *   GET    /api/usuario/{id}  → UsuarioResponseDto
- *   PUT    /api/usuario/{id}  → UsuarioResponseDto
- *   DELETE /api/usuario/{id}  → void
- *   PATCH  /api/usuario/{id}/status?ativo=boolean → UsuarioResponseDto
- *
- * O POST de cadastro é público no backend; as demais operações exigem JWT.
- * O authInterceptor envia o token automaticamente quando o usuário está autenticado.
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
   private readonly http    = inject(HttpClient);

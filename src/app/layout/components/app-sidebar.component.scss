@@ -70,7 +70,7 @@
   text-overflow: ellipsis;
 }
 
-// Mobile: sidebar fica oculta (expansão manual pode ser implementada via overlay)
+
 @media (max-width: 768px) {
   .app-sidebar {
     display: none;

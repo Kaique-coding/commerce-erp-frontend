@@ -3,7 +3,7 @@ import { LojaSidebarComponent } from './loja-sidebar.component';
 import { LojaTopbarComponent } from './loja-topbar.component';
 import { RouterOutlet } from '@angular/router';
 
-/** Componente base da área da loja. A rota será registrada separadamente. */
+
 @Component({
   selector: 'app-loja',
   standalone: true,

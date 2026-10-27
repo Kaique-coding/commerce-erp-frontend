@@ -6,17 +6,17 @@ import { environment }       from '../../../environments/environment';
 import { ProdutoRequestDto } from '../dto/produto.request.dto';
 import { ProdutoResponseDto } from '../dto/produto.response.dto';
 
-/**
- * Serviço HTTP para o recurso Produto.
- *
- * Endpoints do back-end (base: /api):
- *   GET    /api/produtos            → List<ProdutoResponseDto>
- *   GET    /api/produto/{id}        → ProdutoResponseDto
- *   POST   /api/produto             → ProdutoResponseDto
- *   PUT    /api/produto/{id}        → ProdutoResponseDto
- *   DELETE /api/produto/{id}        → void
- *   PATCH  /api/produto/{id}/status → ProdutoResponseDto  (param: ativo=boolean)
- */
+
+
+
+
+
+
+
+
+
+
+
 @Injectable({ providedIn: 'root' })
 export class ProdutoService {
   private readonly http    = inject(HttpClient);
@@ -59,7 +59,7 @@ export class ProdutoService {
       .pipe(catchError(this.handleError));
   }
 
-  // ── Tratamento de erros ──────────────────────────────────────────────────────
+
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     const backendMessage = (error.error as { mensagem?: string })?.mensagem;

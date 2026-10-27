@@ -10,7 +10,7 @@ interface LojaNavItem {
   route: string;
 }
 
-/** Navegação destinada à área de compras dos clientes. */
+
 @Component({
   selector: 'app-loja-sidebar',
   standalone: true,

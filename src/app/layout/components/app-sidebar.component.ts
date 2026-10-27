@@ -9,10 +9,10 @@ interface NavItem {
   route: string;
 }
 
-/**
- * Menu lateral da aplicação.
- * Expansível/recolhível. Adicione itens ao array `navItems`.
- */
+
+
+
+
 @Component({
   selector: 'app-sidebar',
   standalone: true,

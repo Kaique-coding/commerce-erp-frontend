@@ -3,17 +3,17 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 
 export type NotificationSeverity = 'success' | 'info' | 'warn' | 'error' | 'secondary' | 'contrast';
 
-/**
- * Serviço centralizado de notificações e confirmações.
- *
- * Utiliza os serviços oficiais do PrimeNG: MessageService e ConfirmationService.
- * Registre `<p-toast>` e `<p-confirmDialog>` no layout principal para que este
- * serviço funcione em qualquer parte da aplicação.
- *
- * Uso:
- *   notificationService.success('Salvo com sucesso');
- *   notificationService.confirm({ message: 'Deseja excluir?', accept: () => ... });
- */
+
+
+
+
+
+
+
+
+
+
+
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
   private readonly messageService = inject(MessageService);

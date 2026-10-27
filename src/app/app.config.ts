@@ -15,21 +15,21 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
 
-    // Animações assíncronas — requerido pelo PrimeNG v19+
+
     provideAnimationsAsync(),
 
-    // HttpClient com interceptor de autenticação (injeta Bearer token)
+
     provideHttpClient(withInterceptors([authInterceptor])),
 
-    // Configuração global do PrimeNG com preset Aura personalizado
+
     providePrimeNG(primeNGConfig),
 
-    // ngx-mask disponível em toda a aplicação
+
     provideNgxMask(),
 
-    // Serviços globais do PrimeNG utilizados pelo NotificationService
-    // Precisam estar registrados globalmente (não providedIn: 'root') para
-    // que o Toast e ConfirmDialog do layout os consumam corretamente.
+
+
+
     MessageService,
     ConfirmationService,
   ],

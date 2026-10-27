@@ -119,7 +119,7 @@ export class LoginComponent {
           }
           void this.router.navigate(['/loja']);
         } else if (response.acessoPermitido && response.token) {
-          // Armazena o token com base na opção "Lembrar-me"
+
           this.authService.storeToken(response.token, rememberMe, response.perfilUsuario ?? PerfilUsuario.USUARIO_INTERNO);
           if (response.notificacaoBoasVindas) {
             this.notificationCenter.usuarioBemVindo();
@@ -134,7 +134,7 @@ export class LoginComponent {
 
           void this.router.navigate(['/app/dashboard']);
         } else {
-          // Back-end retornou 200 mas negou o acesso
+
           this.authError.set(response.mensagem || 'Acesso negado. Verifique suas credenciais.');
         }
       },

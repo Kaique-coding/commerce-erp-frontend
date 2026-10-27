@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-// PrimeNG Components
+
 import { ButtonModule }       from 'primeng/button';
 import { InputTextModule }    from 'primeng/inputtext';
 import { SelectModule }       from 'primeng/select';
@@ -36,12 +36,12 @@ interface SelectOption {
   value: string;
 }
 
-/**
- * Página de demonstração visual do PrimeNG.
- *
- * Serve para validar que a instalação e o tema estão funcionando corretamente.
- * Todos os dados são fictícios e não representam regras de negócio.
- */
+
+
+
+
+
+
 @Component({
   selector: 'app-demo',
   standalone: true,
@@ -72,7 +72,7 @@ interface SelectOption {
 export class DemoComponent {
   private readonly notificationService = inject(NotificationService);
 
-  // ── Estado dos controles ────────────────────────────────────────────────────
+
 
   textValue      = signal('');
   textareaValue  = signal('');
@@ -83,7 +83,7 @@ export class DemoComponent {
   dialogVisible  = signal(false);
   loading        = signal(false);
 
-  // ── Dados para Select ───────────────────────────────────────────────────────
+
 
   readonly categoryOptions: SelectOption[] = [
     { label: 'Eletrônicos',  value: 'electronics' },
@@ -92,7 +92,7 @@ export class DemoComponent {
     { label: 'Móveis',       value: 'furniture'    },
   ];
 
-  // ── Dados fictícios para a tabela ───────────────────────────────────────────
+
 
   readonly products: Product[] = [
     { id: 1, name: 'Notebook Pro 15',   category: 'Eletrônicos', price: 4299.90, status: 'active'   },
@@ -103,7 +103,7 @@ export class DemoComponent {
     { id: 6, name: 'Cadeira Ergonômica',category: 'Móveis',      price: 2499.90, status: 'active'   },
   ];
 
-  // ── Ações ───────────────────────────────────────────────────────────────────
+
 
   showSuccess(): void {
     this.notificationService.success('Operação realizada', 'Os dados foram salvos com sucesso.');
@@ -144,7 +144,7 @@ export class DemoComponent {
     setTimeout(() => this.loading.set(false), 2500);
   }
 
-  // ── Helpers de template ─────────────────────────────────────────────────────
+
 
   getStatusSeverity(status: Product['status']): 'success' | 'warn' | 'secondary' {
     const map: Record<Product['status'], 'success' | 'warn' | 'secondary'> = {

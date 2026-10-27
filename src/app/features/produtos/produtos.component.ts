@@ -84,7 +84,7 @@ export class ProdutosComponent implements OnInit {
   private readonly destroyRef      = inject(DestroyRef);
   private readonly buscaPorId$     = new Subject<string>();
 
-  // ── Estado principal ────────────────────────────────────────────────────────
+
 
   readonly carregando    = signal(false);
   readonly salvando      = signal(false);
@@ -102,7 +102,7 @@ export class ProdutosComponent implements OnInit {
   private idEmEdicao: string | null = null;
   private readonly _produtos = signal<ProdutoResponseDto[]>([]);
 
-  // ── Filtros ─────────────────────────────────────────────────────────────────
+
 
   readonly filtroTexto = signal('');
   readonly filtroStatus = signal<boolean | null>(null);
@@ -129,7 +129,7 @@ export class ProdutosComponent implements OnInit {
     });
   });
 
-  // ── Opções de selects ────────────────────────────────────────────────────────
+
 
   readonly opcoesUnidade: SelectOption<UnidadeMedida>[] = Object.values(UnidadeMedida).map(v => ({
     label: UNIDADE_MEDIDA_LABELS[v],
@@ -141,7 +141,7 @@ export class ProdutosComponent implements OnInit {
     { label: 'Inativos', value: false },
   ];
 
-  // ── Formulário ───────────────────────────────────────────────────────────────
+
 
   readonly form = this.fb.nonNullable.group({
     nome:               ['', [Validators.required, Validators.maxLength(255)]],
@@ -160,7 +160,7 @@ export class ProdutosComponent implements OnInit {
     ativo:              [true],
   });
 
-  // ── Ciclo de vida ────────────────────────────────────────────────────────────
+
 
   ngOnInit(): void {
     this.destroyRef.onDestroy(() => this.liberarPreviewImagem());
@@ -192,7 +192,7 @@ export class ProdutosComponent implements OnInit {
       });
   }
 
-  // ── Carregamento ─────────────────────────────────────────────────────────────
+
 
   carregarProdutos(): void {
     this.carregando.set(true);
@@ -210,7 +210,7 @@ export class ProdutosComponent implements OnInit {
     });
   }
 
-  // ── Filtro ───────────────────────────────────────────────────────────────────
+
 
   atualizarPesquisa(texto: string): void {
     this.filtroTexto.set(texto);
@@ -228,7 +228,7 @@ export class ProdutosComponent implements OnInit {
       .toLocaleLowerCase('pt-BR');
   }
 
-  // ── Formulário: abertura ─────────────────────────────────────────────────────
+
 
   abrirFormulario(): void {
     this.idEmEdicao = null;
@@ -246,10 +246,10 @@ export class ProdutosComponent implements OnInit {
     this.nomeImagemOriginal.set(produto.imagem?.nomeArquivo ?? null);
     this.previewImagem.set(this.imagemOriginalSrc());
 
-    // Converte a descrição textual da unidade de volta para o enum
-    // A API retorna a descricao (ex: "Unidade"), mas precisamos do valor enum.
-    // O back-end, porém, serializa o enum como string (EnumType.STRING),
-    // portanto na resposta o valor é o nome do enum (ex: "UNIDADE").
+
+
+
+
     this.form.reset({
       nome:               produto.nome,
       descricao:          produto.descricao,
@@ -274,7 +274,7 @@ export class ProdutosComponent implements OnInit {
     this.detalhesVisiveis.set(true);
     this.carregandoDetalhes.set(true);
 
-    // Busca o detalhe completo para evitar usar uma cópia antiga da linha da tabela.
+
     this.produtoSvc.buscarPorId(produto.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -335,7 +335,7 @@ export class ProdutosComponent implements OnInit {
     input.value = '';
   }
 
-  // ── Formulário: submissão ────────────────────────────────────────────────────
+
 
   salvar(): void {
     this.form.markAllAsTouched();
@@ -364,7 +364,7 @@ export class ProdutosComponent implements OnInit {
     const arquivo = this.imagemSelecionada();
     if (arquivo) {
       arquivo.arrayBuffer().then(buffer => {
-        // Java byte usa valores de -128 a 127; Int8Array gera exatamente essa faixa.
+
         const imagem = Array.from(new Int8Array(buffer));
         this.executarSalvamento({ ...dto, imagem, nomeArquivo: arquivo.name });
       }).catch(() => {
@@ -421,7 +421,7 @@ export class ProdutosComponent implements OnInit {
     this.previewImagem.set(null);
   }
 
-  // ── Excluir ──────────────────────────────────────────────────────────────────
+
 
   confirmarExclusao(produto: ProdutoResponseDto): void {
     this.notify.confirm({
@@ -451,7 +451,7 @@ export class ProdutosComponent implements OnInit {
     });
   }
 
-  // ── Inativar / Ativar ────────────────────────────────────────────────────────
+
 
   confirmarAlteracaoStatus(produto: ProdutoResponseDto): void {
     const acao   = produto.ativo ? 'inativar' : 'ativar';
@@ -485,7 +485,7 @@ export class ProdutosComponent implements OnInit {
     });
   }
 
-  // ── Helpers ──────────────────────────────────────────────────────────────────
+
 
   invalido(campo: string): boolean {
     const ctrl = this.form.get(campo);
@@ -506,12 +506,12 @@ export class ProdutosComponent implements OnInit {
     return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
-  /**
-   * O back-end serializa @Enumerated(EnumType.STRING), portanto o campo
-   * unidadeMedidaCompra/venda na resposta JSON já é o nome do enum (ex: "UNIDADE").
-   * Porém o ProdutoResponseDto define o tipo como string (descrição textual).
-   * Fazemos a resolução aqui para garantir que o form receba o valor correto.
-   */
+
+
+
+
+
+
   private resolverEnum(valor: string | null | undefined): UnidadeMedida | null {
     if (!valor) return null;
     const upper = valor.toUpperCase() as UnidadeMedida;

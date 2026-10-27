@@ -1,6 +1,6 @@
 import { ProdutoImagemResponseDto } from '../dto/produto.response.dto';
 
-/** Converte a byte[] retornada pelo Jackson em uma URL que o navegador pode renderizar. */
+
 export function produtoImagemDataUrl(imagem: ProdutoImagemResponseDto | null | undefined): string | null {
   if (!imagem?.imagem) return null;
 

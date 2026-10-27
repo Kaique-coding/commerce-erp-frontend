@@ -25,7 +25,7 @@ export interface PedidoProdutoRequestDto {
 }
 
 export interface PedidoRequestDto {
-  /** O backend identifica automaticamente o cliente autenticado. */
+
   produtos: PedidoProdutoRequestDto[];
   formaPagamento: FormaPagamento;
 }

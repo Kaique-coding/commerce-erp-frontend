@@ -1,19 +1,19 @@
-// ────────────────────────────────────────────────────────────────────────────
-// Estilos Globais — Commerce ERP
-//
-// O primeicons/primeicons.css é carregado via angular.json (styles[]).
-//
-// O tema visual (Aura + preset personalizado) é configurado via providePrimeNG
-// em app.config.ts — NÃO importe arquivos de tema CSS antigos aqui.
-// ────────────────────────────────────────────────────────────────────────────
 
-// Parciais SCSS usando a sintaxe moderna @use
+
+
+
+
+
+
+
+
+
 @use './styles/reset';
 @use './styles/typography';
 @use './styles/utilities';
 @use './styles/primeng-overrides';
 
-// ── Estilos base da aplicação ────────────────────────────────────────────────
+
 
 html,
 body {
@@ -25,7 +25,7 @@ body {
   background-color: var(--p-surface-50, #f8fafc);
 }
 
-// Elemento raiz do Angular
+
 app-root {
   display: block;
   height: 100%;

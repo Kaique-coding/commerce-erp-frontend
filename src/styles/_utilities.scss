@@ -1,7 +1,7 @@
-// Classes utilitárias para espaçamento, alinhamento e layout.
-// Escopo intencional: apenas utilidades que não estejam cobertas pelo PrimeNG.
 
-// ── Espaçamento ──────────────────────────────────────────────────────
+
+
+
 
 .u-mt-0  { margin-top:    0;       }
 .u-mt-xs { margin-top:    0.25rem; }
@@ -30,7 +30,7 @@
 .u-px-lg { padding-inline: 1.5rem; }
 .u-py-lg { padding-block:  1.5rem; }
 
-// ── Flexbox ──────────────────────────────────────────────────────────
+
 .u-flex           { display: flex; }
 .u-flex-col       { display: flex; flex-direction: column; }
 .u-flex-wrap      { flex-wrap: wrap; }
@@ -45,7 +45,7 @@
 .u-gap-md         { gap: 1rem;    }
 .u-gap-lg         { gap: 1.5rem;  }
 
-// ── Texto ─────────────────────────────────────────────────────────────
+
 .u-text-center   { text-align: center; }
 .u-text-right    { text-align: right;  }
 .u-text-muted    { color: var(--p-text-muted-color); }
@@ -56,7 +56,7 @@
 .u-font-semibold { font-weight: 600; }
 .u-font-bold     { font-weight: 700; }
 
-// ── Visibilidade ──────────────────────────────────────────────────────
+
 .u-hidden { display: none; }
 
 @media (max-width: 768px) {
@@ -67,11 +67,11 @@
   .u-hidden-desktop { display: none; }
 }
 
-// ── Largura ───────────────────────────────────────────────────────────
+
 .u-w-full { width: 100%; }
 .u-w-auto { width: auto; }
 
-// ── Truncamento de texto ──────────────────────────────────────────────
+
 .u-truncate {
   overflow: hidden;
   text-overflow: ellipsis;

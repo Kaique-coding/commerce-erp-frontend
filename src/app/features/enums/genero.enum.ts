@@ -1,4 +1,4 @@
-/** Espelha o enum Genero do back-end. */
+
 export enum Genero {
   MASCULINO     = 'MASCULINO',
   FEMININO      = 'FEMININO',

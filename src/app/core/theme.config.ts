@@ -1,14 +1,14 @@
 import { definePreset } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 
-/**
- * Preset visual centralizado do Commerce ERP.
- *
- * Derivado do Aura oficial com paleta e tokens personalizados.
- * Para alterar cores, edite os valores de `primitive` e `semantic` abaixo.
- *
- * Documentação: https://primeng.dev/theming
- */
+
+
+
+
+
+
+
+
 export const AppTheme = definePreset(Aura, {
   primitive: {
     borderRadius: {
@@ -96,12 +96,12 @@ export const AppTheme = definePreset(Aura, {
   },
 });
 
-/** Opções globais do PrimeNG */
+
 export const primeNGConfig = {
   theme: {
     preset: AppTheme,
     options: {
-      /** Aplica estilos dentro de :root, não de uma classe — compatível com tema único */
+
       darkModeSelector: '.app-dark',
       cssLayer: {
         name: 'primeng',

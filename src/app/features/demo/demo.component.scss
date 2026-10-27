@@ -2,7 +2,7 @@
   max-width: 1200px;
 }
 
-// ── Cabeçalho da página ──────────────────────────────────────────────
+
 .demo-page__header {
   margin-bottom: 2rem;
 }
@@ -20,7 +20,7 @@
   font-size: 0.9375rem;
 }
 
-// ── Seções ───────────────────────────────────────────────────────────
+
 .demo-section {
   margin-bottom: 2.5rem;
 }
@@ -36,10 +36,10 @@
 }
 
 .demo-section__content {
-  // Contêiner que deixa os cards se expandirem normalmente
+
 }
 
-// ── Grupos de botões ─────────────────────────────────────────────────
+
 .button-group {
   display: flex;
   flex-wrap: wrap;
@@ -47,7 +47,7 @@
   align-items: center;
 }
 
-// ── Formulários ──────────────────────────────────────────────────────
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -97,7 +97,7 @@
   margin-top: 1.5rem;
 }
 
-// ── Tags e Badges ─────────────────────────────────────────────────────
+
 .tag-group,
 .badge-group {
   display: flex;
@@ -106,7 +106,7 @@
   align-items: center;
 }
 
-// ── Ícones ────────────────────────────────────────────────────────────
+
 .icon-group {
   display: flex;
   flex-wrap: wrap;
@@ -124,7 +124,7 @@
   }
 }
 
-// ── Carregamento ──────────────────────────────────────────────────────
+
 .loading-demo {
   display: flex;
   justify-content: center;
@@ -146,7 +146,7 @@
   margin-top: 0.5rem;
 }
 
-// ── Grid responsivo de cartões ────────────────────────────────────────
+
 .responsive-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -172,7 +172,7 @@
   margin: 0;
 }
 
-// ── Responsividade ─────────────────────────────────────────────────────
+
 @media (max-width: 600px) {
   .form-grid {
     grid-template-columns: 1fr;
@@ -191,7 +191,7 @@
   }
 }
 
-// Mensagem de validação dentro do form card
+
 .demo-form-message {
   display: block;
   margin-top: 1rem;

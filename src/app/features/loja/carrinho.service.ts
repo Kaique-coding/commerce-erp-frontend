@@ -25,7 +25,7 @@ export class CarrinhoService {
     const novaQuantidade = (existente?.quantidade ?? 0) + 1;
     if (produto.estoque !== null && novaQuantidade > produto.estoque) return false;
 
-    // Evita duplicar o Base64 da foto no localStorage; no carrinho basta guardar os dados comerciais.
+
     const produtoCarrinho = { ...produto, imagem: null };
     this.estado.update(itens => existente
       ? itens.map(item => item.produto.id === produto.id

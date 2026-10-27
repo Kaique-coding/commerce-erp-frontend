@@ -9,7 +9,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { NotificationCenterService } from '../../core/services/notification-center.service';
 import { PerfilUsuario } from '../enums/perfil-usuario.enum';
 
-/** Topbar da loja com as ações de notificação e encerramento de sessão existentes. */
+
 @Component({
   selector: 'app-loja-topbar',
   standalone: true,

@@ -1,4 +1,4 @@
-// ── Página ────────────────────────────────────────────────────────────
+
 .produtos-page {
   max-width: 1200px;
 }
@@ -25,7 +25,7 @@
   margin: 0;
 }
 
-// ── Toolbar ───────────────────────────────────────────────────────────
+
 .produtos-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -46,7 +46,7 @@
   }
 }
 
-// ── Estado de carregamento ─────────────────────────────────────────────
+
 .produtos-loading {
   display: flex;
   justify-content: center;
@@ -54,7 +54,7 @@
   min-height: 10rem;
 }
 
-// ── Estado vazio ──────────────────────────────────────────────────────
+
 .produtos-empty {
   display: flex;
   flex-direction: column;
@@ -73,7 +73,7 @@
   }
 }
 
-// ── Colunas da tabela ─────────────────────────────────────────────────
+
 .col-num {
   text-align: right;
   white-space: nowrap;
@@ -154,7 +154,7 @@
   font-size: 0.8125rem;
 }
 
-// ── Formulário (dialog) ───────────────────────────────────────────────
+
 .form-row {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -175,7 +175,7 @@
     flex-direction: row;
     align-items: center;
     gap: 0.625rem;
-    padding-top: 1.5rem; // alinha com os outros campos que têm label acima
+    padding-top: 1.5rem;
   }
 
   &--error input,
@@ -268,7 +268,7 @@
 
 .image-upload__remove:hover { background: var(--p-red-50, #fef2f2); }
 
-// ── Responsividade ────────────────────────────────────────────────────
+
 @media (max-width: 640px) {
   .produtos-page__header {
     flex-direction: column;

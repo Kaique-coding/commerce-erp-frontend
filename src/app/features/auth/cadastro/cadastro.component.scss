@@ -1,8 +1,8 @@
-// ────────────────────────────────────────────────────────────────────────────
-// Cadastro — estilos
-// Mesmo layout split-screen do login. Painel direito com scroll para acomodar
-// formulários mais longos.
-// ────────────────────────────────────────────────────────────────────────────
+
+
+
+
+
 
 :host {
   --brand-from: #4f46e5;
@@ -16,14 +16,14 @@
   height: 100%;
 }
 
-// ── Layout raiz ───────────────────────────────────────────────────────────────
+
 
 .cadastro-page {
   display: flex;
   min-height: 100dvh;
 }
 
-// ── Painel compartilhado ──────────────────────────────────────────────────────
+
 
 .cadastro-panel {
   flex: 1;
@@ -33,7 +33,7 @@
   padding: 3rem 2rem;
 }
 
-// ── Painel de marca (esquerdo) ────────────────────────────────────────────────
+
 
 .cadastro-panel--brand {
   position: relative;
@@ -87,7 +87,7 @@
   margin: 0;
 }
 
-// Blobs decorativos
+
 .brand-blob {
   position: absolute;
   border-radius: 50%;
@@ -134,7 +134,7 @@
   }
 }
 
-// ── Painel de formulário (direito) ────────────────────────────────────────────
+
 
 .cadastro-panel--form {
   background-color: var(--p-surface-0);
@@ -152,7 +152,7 @@
   flex-direction: column;
 }
 
-// ── Cabeçalho ─────────────────────────────────────────────────────────────────
+
 
 .cadastro-form-header {
   margin-bottom: 2rem;
@@ -207,7 +207,7 @@
   line-height: 1.55;
 }
 
-// ── Erro geral ────────────────────────────────────────────────────────────────
+
 
 .auth-error {
   margin-bottom: 1.25rem;
@@ -242,7 +242,7 @@
   }
 }
 
-// ── Seções do formulário ──────────────────────────────────────────────────────
+
 
 .form-section-title {
   font-size: 0.75rem;
@@ -259,7 +259,7 @@
   }
 }
 
-// ── Campos ────────────────────────────────────────────────────────────────────
+
 
 form {
   display: flex;
@@ -294,7 +294,7 @@ form {
   }
 }
 
-// Grid de 2 colunas para pares de campos
+
 .form-row-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -344,7 +344,7 @@ form {
   }
 }
 
-// ── Botão submit ──────────────────────────────────────────────────────────────
+
 
 ::ng-deep .cadastro-submit-btn {
   width: 100%;
@@ -367,7 +367,7 @@ form {
   }
 }
 
-// ── Link de login ─────────────────────────────────────────────────────────────
+
 
 .login-text {
   text-align: center;
@@ -394,7 +394,7 @@ form {
   }
 }
 
-// ── Rodapé ────────────────────────────────────────────────────────────────────
+
 
 .cadastro-footer {
   border-top: 1px solid var(--p-surface-200);
@@ -442,7 +442,7 @@ form {
   }
 }
 
-// ── Responsividade ────────────────────────────────────────────────────────────
+
 
 @media (max-width: 900px) {
   .cadastro-page {

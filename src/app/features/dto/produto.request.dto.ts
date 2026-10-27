@@ -15,7 +15,7 @@ export interface ProdutoRequestDto {
   valorVenda: number;
   valorCompra: number | null;
   ativo: boolean;
-  /** Bytes da imagem em valores signed byte (-128 a 127), aceitos pelo byte[] do backend. */
+
   imagem?: number[] | null;
   nomeArquivo?: string | null;
 }

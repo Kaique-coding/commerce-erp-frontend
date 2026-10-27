@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-  // ── Autenticação (sem layout com sidebar/topbar) ─────────────────────────
+
   {
     path: '',
     pathMatch: 'full',
@@ -43,7 +43,7 @@ export const routes: Routes = [
     ],
   },
 
-  // ── Área autenticada (com layout principal) ──────────────────────────────
+
   {
     path: 'app',
     loadComponent: () =>
@@ -82,7 +82,7 @@ export const routes: Routes = [
     ],
   },
 
-  // ── Rota coringa ─────────────────────────────────────────────────────────
+
   {
     path: '**',
     redirectTo: '',

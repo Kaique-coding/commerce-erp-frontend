@@ -9,10 +9,10 @@ import { AuthService } from '../../core/services/auth.service';
 import { NotificationCenterService } from '../../core/services/notification-center.service';
 import { PerfilUsuario } from '../../features/enums/perfil-usuario.enum';
 
-/**
- * Barra superior da aplicação.
- * Pode ser expandida com menus de usuário, notificações e ações contextuais.
- */
+
+
+
+
 @Component({
   selector: 'app-topbar',
   standalone: true,

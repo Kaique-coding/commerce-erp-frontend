@@ -10,7 +10,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-width: 0; // Evita overflow em conteúdo largo
+  min-width: 0;
 }
 
 .app-layout__content {
@@ -19,7 +19,7 @@
   overflow-y: auto;
 }
 
-// Responsividade: em mobile, layout empilhado verticalmente
+
 @media (max-width: 768px) {
   .app-layout {
     flex-direction: column;

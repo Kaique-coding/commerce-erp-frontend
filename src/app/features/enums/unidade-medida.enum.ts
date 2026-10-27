@@ -1,4 +1,4 @@
-/** Espelha o enum UnidadeMedida do back-end. */
+
 export enum UnidadeMedida {
   UNIDADE     = 'UNIDADE',
   CAIXA       = 'CAIXA',
@@ -8,7 +8,7 @@ export enum UnidadeMedida {
   FARDO       = 'FARDO',
 }
 
-/** Label legível para exibição nos selects. */
+
 export const UNIDADE_MEDIDA_LABELS: Record<UnidadeMedida, string> = {
   [UnidadeMedida.UNIDADE]:    'Unidade (UN)',
   [UnidadeMedida.CAIXA]:      'Caixa (CX)',

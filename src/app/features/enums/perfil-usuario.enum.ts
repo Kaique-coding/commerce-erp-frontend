@@ -1,4 +1,4 @@
-/** Espelha o enum PerfilUsuario do back-end. */
+
 export enum PerfilUsuario {
   CLIENTE          = 'CLIENTE',
   USUARIO_INTERNO  = 'USUARIO_INTERNO',

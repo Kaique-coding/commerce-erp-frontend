@@ -2,7 +2,7 @@
 
 <div class="cadastro-page" aria-label="Página de cadastro">
 
-  <!-- ── Painel de marca (esquerdo) ──────────────────────────────────── -->
+
   <aside class="cadastro-panel cadastro-panel--brand" aria-hidden="true">
     <div class="cadastro-panel__brand-content">
       <div class="brand-logo">
@@ -17,7 +17,7 @@
     <div class="brand-blob brand-blob--3" aria-hidden="true"></div>
   </aside>
 
-  <!-- ── Painel do formulário (direito) ──────────────────────────────── -->
+
   <main class="cadastro-panel cadastro-panel--form" role="main">
     <div class="cadastro-form-wrapper">
 
@@ -41,10 +41,10 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate autocomplete="on"
             aria-label="Formulário de cadastro">
 
-        <!-- Seção: Dados de acesso -->
+
         <p class="form-section-title">Dados de acesso</p>
 
-        <!-- Nome de usuário -->
+
         <div class="form-field" [ngClass]="{ 'form-field--error': usuarioInvalido() }">
           <p-floatlabel variant="on">
             <input pInputText id="cad-usuario" formControlName="usuario" autocomplete="username"
@@ -63,7 +63,7 @@
           }
         </div>
 
-        <!-- Senha -->
+
         <div class="form-field" [ngClass]="{ 'form-field--error': senhaInvalida() }">
           <p-floatlabel variant="on">
             <p-password inputId="cad-senha" formControlName="senha" [feedback]="true" [toggleMask]="true"
@@ -86,10 +86,10 @@
           }
         </div>
 
-        <!-- Seção: Dados pessoais -->
+
         <p class="form-section-title">Dados pessoais</p>
 
-        <!-- Nome + Sobrenome -->
+
         <div class="form-row-2">
           <div class="form-field" [ngClass]="{ 'form-field--error': nomeInvalido() }">
             <p-floatlabel variant="on">
@@ -122,7 +122,7 @@
           </div>
         </div>
 
-        <!-- Data de nascimento + Gênero -->
+
         <div class="form-row-2">
           <div class="form-field" [ngClass]="{ 'form-field--error': dataNascimentoInvalido() }">
             <p-floatlabel variant="on">
@@ -173,7 +173,7 @@
           </div>
         </div>
 
-        <!-- CPF + RG -->
+
         <div class="form-row-2">
           <div class="form-field" [ngClass]="{ 'form-field--error': cpfInvalido() }">
             <p-floatlabel variant="on">
@@ -206,10 +206,10 @@
           </div>
         </div>
 
-        <!-- Seção: Contato -->
+
         <p class="form-section-title">Contato</p>
 
-        <!-- Email principal -->
+
         <div class="form-field" [ngClass]="{ 'form-field--error': emailPrincipalInvalido() }">
           <p-floatlabel variant="on">
             <input pInputText id="cad-email" type="email" formControlName="emailPrincipal"
@@ -229,7 +229,7 @@
           }
         </div>
 
-        <!-- Email secundário -->
+
         <div class="form-field" [ngClass]="{ 'form-field--error': emailSecundarioInvalido() }">
           <p-floatlabel variant="on">
             <input pInputText id="cad-email2" type="email" formControlName="emailSecundario"
@@ -249,7 +249,7 @@
           }
         </div>
 
-        <!-- Telefone principal + secundário -->
+
         <div class="form-row-2">
           <div class="form-field" [ngClass]="{ 'form-field--error': telPrincipalInvalido() }">
             <p-floatlabel variant="on">
@@ -292,7 +292,7 @@
           </div>
         </div>
 
-        <!-- Botão de submit -->
+
         <p-button
           type="submit"
           label="Criar conta"

@@ -1,6 +1,6 @@
 <div class="produtos-page">
 
-  <!-- ── Cabeçalho ─────────────────────────────────────────────────── -->
+
   <header class="produtos-page__header">
     <div>
       <h1 class="produtos-page__title">Produtos</h1>
@@ -14,7 +14,7 @@
     />
   </header>
 
-  <!-- ── Barra de busca + filtro de status ─────────────────────────── -->
+
   <div class="produtos-toolbar">
     <span class="p-input-icon-left produtos-toolbar__search">
       <i class="pi pi-search" aria-hidden="true"></i>
@@ -41,7 +41,7 @@
     />
   </div>
 
-  <!-- ── Tabela ─────────────────────────────────────────────────────── -->
+
   <p-card>
     @if (carregando()) {
       <div class="produtos-loading" aria-label="Carregando produtos">
@@ -155,7 +155,7 @@
 
 </div>
 
-<!-- ── Dialog: Formulário cadastro / edição ───────────────────────── -->
+
 <p-dialog
   [(visible)]="dialogVisivel"
   [header]="modoEdicao() ? 'Editar produto' : 'Novo produto'"
@@ -169,7 +169,7 @@
 
   <form [formGroup]="form" novalidate (ngSubmit)="salvar()" aria-label="Formulário de produto">
 
-    <!-- Linha 1: nome (full-width) -->
+
     <div class="form-row">
       <div class="form-field form-field--full" [class.form-field--error]="invalido('nome')">
         <label for="prd-nome" class="form-label">Nome <span aria-hidden="true" class="required">*</span></label>
@@ -184,7 +184,7 @@
       </div>
     </div>
 
-    <!-- Linha 2: marca / modelo / cor -->
+
     <div class="form-row">
       <div class="form-field">
         <label for="prd-marca" class="form-label">Marca</label>
@@ -200,7 +200,7 @@
       </div>
     </div>
 
-    <!-- Linha 3: descrição -->
+
     <div class="form-row">
       <div class="form-field form-field--full">
         <label for="prd-descricao" class="form-label">Descrição</label>
@@ -262,7 +262,7 @@
       </div>
     </div>
 
-    <!-- Linha 4: valor venda / valor compra -->
+
     <div class="form-row">
       <div class="form-field" [class.form-field--error]="invalido('valorVenda')">
         <label for="prd-vvenda" class="form-label">Valor de venda <span aria-hidden="true" class="required">*</span></label>
@@ -296,7 +296,7 @@
       </div>
     </div>
 
-    <!-- Linha 5: estoque / mín / máx -->
+
     <div class="form-row">
       <div class="form-field">
         <label for="prd-estoque" class="form-label">Estoque</label>
@@ -312,7 +312,7 @@
       </div>
     </div>
 
-    <!-- Linha 6: unidades de medida -->
+
     <div class="form-row">
       <div class="form-field">
         <label for="prd-umcompra" class="form-label">Unidade de compra</label>
@@ -342,7 +342,7 @@
       </div>
     </div>
 
-    <!-- Linha 7: localização / ativo -->
+
     <div class="form-row">
       <div class="form-field">
         <label for="prd-local" class="form-label">Localização</label>
@@ -413,5 +413,5 @@
   }
 </p-dialog>
 
-<!-- ConfirmDialog do PrimeNG (usado pelo NotificationService) -->
+
 <p-confirmDialog />

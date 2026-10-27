@@ -31,10 +31,10 @@ import { UsuarioService }   from '../../service/usuario.service';
 import { Genero, GENERO_LABELS }                   from '../../enums/genero.enum';
 import { PerfilUsuario }    from '../../enums/perfil-usuario.enum';
 
-/** Valida CPF com os dois dígitos verificadores. */
+
 const cpfValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const raw = (control.value as string ?? '').replace(/\D/g, '');
-  if (!raw) return null; // deixa o Validators.required falar
+  if (!raw) return null;
   if (raw.length !== 11 || /^(\d)\1{10}$/.test(raw)) return { cpfInvalido: true };
 
   const calc = (mod: number): number => {
@@ -103,7 +103,7 @@ export class CadastroComponent {
     genero:             [null as Genero | null, [Validators.required]],
   });
 
-  // ── Helpers de validação ────────────────────────────────────────────────────
+
 
   invalido(campo: string): boolean {
     const ctrl = this.form.get(campo);
@@ -122,7 +122,7 @@ export class CadastroComponent {
     return '';
   }
 
-  // Computed signals para os campos mais usados no template
+
   readonly usuarioInvalido    = computed(() => this.invalido('usuario'));
   readonly nomeInvalido       = computed(() => this.invalido('nome'));
   readonly sobrenomeInvalido  = computed(() => this.invalido('sobrenome'));
@@ -135,7 +135,7 @@ export class CadastroComponent {
   readonly senhaInvalida  = computed(() => this.invalido('senha'));
   readonly generoInvalido = computed(() => this.invalido('genero'));
 
-  // ── Submissão ───────────────────────────────────────────────────────────────
+
 
   onSubmit(): void {
     this.form.markAllAsTouched();
@@ -146,7 +146,7 @@ export class CadastroComponent {
 
     const raw = this.form.getRawValue();
 
-    // Converte "DD/MM/AAAA" (valor da máscara) para "AAAA-MM-DD" (LocalDate do back-end)
+
     const dataFormatada = this.formatarData(raw.dataNascimento);
 
     this.usuarioService.cadastrar({
@@ -182,9 +182,9 @@ export class CadastroComponent {
     });
   }
 
-  // ── Helpers privados ────────────────────────────────────────────────────────
 
-  /** Converte "DD/MM/AAAA" → "AAAA-MM-DD" (LocalDate esperado pelo back-end). */
+
+
   private formatarData(data: string): string {
     const [dia, mes, ano] = data.split('/');
     return `${ano}-${mes}-${dia}`;

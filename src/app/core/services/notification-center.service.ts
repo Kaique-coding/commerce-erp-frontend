@@ -11,7 +11,7 @@ export interface AppNotification {
   audience: PerfilUsuario;
 }
 
-/** Guarda notificações de atividade enquanto a aplicação está aberta. */
+
 @Injectable({ providedIn: 'root' })
 export class NotificationCenterService {
   private nextId = 0;
